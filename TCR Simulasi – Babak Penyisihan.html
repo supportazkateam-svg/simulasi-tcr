@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TCR Simulasi – Babak Penyisihan</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef2fb;--card:#fff;--ink:#0e1a38;--mut:#5a6785;--line:#d9e0f0;--pri:#2450f0;--onpri:#fff;--acc:#ffb800;--ok:#0b9b62;--bad:#df3f4a;--soft:#e8edfd;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1127;--card:#111b38;--ink:#e9efff;--mut:#98a5c8;--line:#24325b;--pri:#6b8dff;--onpri:#06102e;--soft:#1a2750;--ok:#34d399;--bad:#ff6b75;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0a1127;--card:#111b38;--ink:#e9efff;--mut:#98a5c8;--line:#24325b;--pri:#6b8dff;--onpri:#06102e;--soft:#1a2750;--ok:#34d399;--bad:#ff6b75;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Nunito Sans',system-ui,sans-serif;min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--card);z-index:10}
+h1,h2,h3,.fd{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;letter-spacing:.01em;margin:0}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:10px 16px}
+.logo{font-size:22px;font-weight:700;display:flex;align-items:center;gap:8px}
+.lg{height:34px;width:auto;border-radius:6px}
+.sp{flex:1}
+.wrap{max-width:1040px;margin:0 auto;padding:18px 16px 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.btn{font:700 15px 'Nunito Sans',sans-serif;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:10px 16px;cursor:pointer}
+.btn:hover{border-color:var(--pri)}
+.btn.pri{background:var(--pri);color:var(--onpri);border-color:var(--pri)}
+.btn.big{font-size:18px;padding:14px 26px;width:100%}
+.btn:disabled{opacity:.4;cursor:default}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.hero{display:grid;gap:20px;grid-template-columns:1.1fr 1fr;align-items:start}
+@media(max-width:820px){.hero{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(34px,6vw,54px);line-height:1;margin-bottom:10px}
+.mut{color:var(--mut)}
+label{display:block;font-weight:700;margin:14px 0 6px}
+.in{width:100%;font:inherit;padding:12px 14px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.in:focus{border-color:var(--pri);outline:none}
+.seg{display:flex;gap:8px}
+.seg input{position:absolute;opacity:0}
+.seg span{display:block;text-align:center;padding:11px;border:2px solid var(--line);border-radius:10px;font-weight:700;cursor:pointer;background:var(--bg)}
+.seg label{flex:1;margin:0}
+.seg input:checked+span{border-color:var(--pri);background:var(--soft);color:var(--pri)}
+.seg input:focus-visible+span{outline:3px solid var(--acc)}
+.err{color:var(--bad);font-weight:700;min-height:22px;margin:8px 0 0}
+ul.rules{padding-left:20px;margin:10px 0 18px}ul.rules li{margin:7px 0}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.pill{background:var(--soft);border-radius:999px;padding:5px 13px;font-weight:700;font-size:14px}
+/* exam */
+.hud{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.who{font-weight:700}.who small{display:block;color:var(--mut);font-weight:400}
+.timer{font:700 30px 'Rajdhani',sans-serif;background:var(--soft);padding:2px 14px;border-radius:10px;min-width:104px;text-align:center}
+.timer.low{background:var(--bad);color:#fff;animation:bl 1s steps(2) infinite}
+@keyframes bl{50%{opacity:.6}}
+@media(prefers-reduced-motion:reduce){.timer.low{animation:none}}
+.track{margin:14px 0}
+.lane{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px;font-weight:700}
+.lane .n{width:74px;text-align:right;color:var(--mut)}
+.lane.me .n{color:var(--pri)}
+.road{flex:1;position:relative;height:22px;border-radius:6px;background:repeating-linear-gradient(90deg,var(--soft) 0 14px,transparent 14px 28px);border-right:14px solid transparent;border-image:conic-gradient(var(--ink) 25%,var(--card) 0 50%,var(--ink) 0 75%,var(--card) 0) 1/0 14px 0 0 stretch}
+.lane.me .road{height:28px}
+.car{position:absolute;top:50%;transform:translate(-50%,-52%);font-size:19px;transition:left .6s}
+.lane.me .car{font-size:24px}
+.main{display:grid;gap:16px;grid-template-columns:1fr 250px;align-items:start}
+@media(max-width:860px){.main{grid-template-columns:1fr}}
+.meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.tag{background:var(--pri);color:var(--onpri);border-radius:6px;padding:2px 10px;font-weight:700;font-size:13px}
+.tag.w{background:var(--acc);color:#2a1d00}
+.stim{background:var(--soft);border-left:5px solid var(--pri);padding:14px 16px;border-radius:8px;margin-bottom:14px;max-width:72ch}
+.stim{overflow-x:auto}.stim p{margin:0 0 10px}.stim p:last-child{margin-bottom:0}.stim table{border-collapse:collapse;width:100%;font-size:15px;margin:8px 0}.stim th,.stim td{border:1px solid var(--line);padding:6px 10px;text-align:left}.stim th{background:var(--card)}.stim pre{white-space:pre-wrap;font:13.5px/1.5 ui-monospace,monospace;margin:6px 0 0;background:var(--card);padding:10px 12px;border-radius:8px}
+.qt{font-size:19px;font-weight:700;margin-bottom:14px;max-width:72ch}
+.qi{max-width:100%;border-radius:8px;margin-bottom:12px}
+.opt{display:flex;gap:12px;align-items:center;width:100%;text-align:left;font:inherit;padding:12px 14px;margin:8px 0;border:2px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);cursor:pointer}
+.opt b{flex:none;width:32px;height:32px;border-radius:8px;background:var(--soft);display:grid;place-items:center;font-family:Rajdhani,sans-serif;font-size:18px}
+.opt.on{border-color:var(--pri);background:var(--soft)}.opt.on b{background:var(--pri);color:var(--onpri)}
+.bs{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.bs div{display:flex;gap:6px;flex:none}
+.bs button{font:700 14px inherit;padding:7px 14px;border-radius:8px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.bs button.on{border-color:var(--pri);background:var(--pri);color:var(--onpri)}
+.acts{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.nav{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:10px 0}
+.nav button{font:700 14px 'Nunito Sans',sans-serif;aspect-ratio:1;border-radius:8px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;position:relative}
+.nav button.ans{background:var(--soft);border-color:var(--pri)}
+.nav button.cur{background:var(--pri);color:var(--onpri);border-color:var(--pri)}
+.nav button.fl::after{content:"";position:absolute;top:3px;right:3px;width:9px;height:9px;border-radius:50%;background:var(--acc)}
+.leg{font-size:13px;color:var(--mut)}
+/* modal */
+.md{position:fixed;inset:0;background:rgba(5,10,30,.65);z-index:50;display:grid;place-items:center;padding:16px}
+.box{background:var(--card);border-radius:16px;padding:24px;max-width:460px;width:100%;max-height:86vh;overflow:auto}
+.box h2{margin-bottom:8px}
+.cd{font:700 120px/1 'Rajdhani',sans-serif;text-align:center;color:var(--pri)}
+.md.fs{background:var(--bg);z-index:70}
+/* result */
+.ring{--p:0;width:170px;height:170px;border-radius:50%;background:conic-gradient(var(--pri) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center;flex:none}
+.ring div{width:134px;height:134px;border-radius:50%;background:var(--card);display:grid;place-items:center;font:700 48px Rajdhani,sans-serif}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:16px 0}
+.stat{background:var(--soft);border-radius:10px;padding:10px 14px}.stat b{display:block;font:700 26px Rajdhani,sans-serif}
+.bar{height:10px;border-radius:5px;background:var(--line);overflow:hidden;margin:4px 0 12px}.bar i{display:block;height:100%;background:var(--pri)}
+details{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:10px 14px;background:var(--bg)}
+summary{cursor:pointer;font-weight:700}
+.rv{color:var(--ok)}.rx{color:var(--bad)}
+textarea.in{min-height:240px;font:13px ui-monospace,monospace}
+@media print{.top,.noprint{display:none!important}body::before{display:none}}
+</style></head><body>
+<header class="top"><div class="logo fd"><img class="lg" src="logo-tcr.png" alt="" onerror="this.style.display='none'">The Champion Race <span class="mut" style="font-weight:600">Simulasi</span></div><div class="sp"></div><button class="btn noprint" id="th" aria-label="Ganti tema">Tema</button></header>
+<main class="wrap" id="app"></main>
+<script>
+const CFG={durasi:{SD:45,SMP:50,SMA:60},acak:false,maxLanggar:3,pin:"admin123",key:"tcr_sim_v2",bank:"tcr_bank_v2"};
+const GAMBUT=`<p><b>Paragraf 1</b><br>Lahan gambut tropis di Indonesia memegang peranan krusial dalam menjaga keseimbangan iklim global karena fungsinya sebagai salah satu penyimpan karbon terestrial raksasa di bumi. Meskipun hanya mencakup sekitar tiga persen dari total luas daratan dunia, lahan gambut mampu mengikat volume karbon dua kali lebih banyak daripada yang tersimpan di seluruh vegetasi hutan daratan bumi. Keberadaan air yang melimpah dalam ekosistem gambut alami menciptakan kondisi anaerobik yang melambatkan proses pembusukan sisa-sisa tumbuhan, sehingga akumulasi bahan organik dapat bertahan hingga ribuan tahun tanpa terurai menjadi gas emisi.</p>
+<p><b>Paragraf 2</b><br>Namun, dalam beberapa dekade terakhir, konversi lahan gambut secara tidak terkendali memicu degradasi ekosistem perairan dan daratan secara luas. Pembuatan saluran drainase buatan atau kanalisasi menyebabkan permukaan gambut menyusut, memicu proses mikroba pengurai bekerja secara masif, dan mengubah fungsi gambut dari penyerap karbon (<i>carbon sink</i>) menjadi pelepas emisi karbon (<i>carbon source</i>). Saat musim kemarau tiba, gambut yang mengering menjadi sangat rentan terbakar hingga ke lapisan dalam, menghasilkan kabut asap beracun yang melintasi batas negara dan melepaskan emisi gas rumah kaca dalam jumlah yang sangat mengkhawatirkan.</p>
+<p><b>Paragraf 3</b><br>Guna menanggulangi kerentanan tersebut, pemerintah bersama lembaga lingkungan menggalakkan strategi restorasi ekosistem gambut secara terpadu melalui pendekatan 3R, yaitu <i>Rewetting</i> (pembasahan kembali), <i>Revegetation</i> (penanaman kembali), dan <i>Revitalisation</i> (pemulihan mata pencaharian masyarakat). Pembasahan dilakukan dengan membangun sekat kanal (<i>canal blocking</i>) untuk menaikkan kembali tinggi muka air tanah. Penanaman kembali menggunakan spesies lokal seperti jelutung rawa dan belangeran yang tahan genangan. Sementara itu, pemulihan ekonomi masyarakat diarahkan pada budi daya perikanan darat dan komoditas non-kayu agar warga desa tidak lagi bergantung pada pembalakan liar atau pembukaan lahan dengan cara membakar.</p>
+<p><b>Paragraf 4</b><br>Pelaksanaan strategi restorasi ini tentu menghadapi tantangan sosial-ekonomi yang tidak ringan pada tahap awal. Penghentian pengeringan lahan sering kali dianggap merugikan produktivitas tanaman komersial tertentu dalam jangka pendek. Meski demikian, hasil evaluasi jangka panjang menunjukkan bahwa ekosistem gambut yang pulih mampu memulihkan fungsi hidrologi kawasan, mencegah bencana banjir dan kebakaran tahunan, serta memberikan kepastian keberlanjutan ekonomi masyarakat lokal secara bermartabat.</p>`;
+const TABEL=`<p><b>Evaluasi Kualitas Air dan Ekosistem 4 Danau (data simulasi)</b></p><table><tr><th>Stasiun Danau</th><th>Indeks Kualitas Air (skala 0–100)</th><th>Spesies Ikan Endemik (jenis)</th><th>Kadar Fosfat (ppm)</th><th>Tutupan Eceng Gondok (%)</th></tr><tr><td>Danau Anggrung</td><td>82</td><td>14</td><td>0,02</td><td>8</td></tr><tr><td>Danau Beringin</td><td>54</td><td>8</td><td>0,15</td><td>45</td></tr><tr><td>Danau Cempaka</td><td>38</td><td>3</td><td>0,42</td><td>78</td></tr><tr><td>Danau Delima</td><td>68</td><td>11</td><td>0,08</td><td>22</td></tr></table><p style="margin-bottom:0"><i>Keterangan: semakin tinggi nilai IKA, air semakin bersih. Kadar fosfat yang tinggi memicu pencemaran nutrisi (eutrofikasi).</i></p>`;
+const INFO=`<p><b>Skema Alur Pengelolaan Sampah Plastik Berbasis Ekonomi Sirkular</b></p><pre>[TAHAP 1: PEMILAHAN DAN KRITERIA INPUT]
+- Kategori A (PET, botol bening bersih tanpa label)
+  : 100 poin/kg
+- Kategori B (HDPE, tutup botol/jeriken)
+  : 80 poin/kg
+- Kategori C (campuran/kemasan berlapis aluminium)
+  : 20 poin/kg
+* Botol PET yang disetor kotor atau masih berlabel
+  dikenai potongan 50% poin.
+
+[TAHAP 2: PENGOLAHAN SIRKULAR]
+- Pencucian mikroskopis dan pencacahan menjadi
+  serpihan bijih plastik murni.
+
+[TAHAP 3: PENUKARAN MANFAAT BEASISWA SEKOLAH]
+- Paket Kupon Beasiswa Buku : minimal 250 poin
+- Paket Kupon Pot Tanaman   : minimal 150 poin</pre>`;
+const TENUN=`<p>Malam makin larut, namun deru mesin pabrik tekstil di tepi desa masih terdengar bising. Di sudut beranda rumahnya yang bersahaja, Pak Tirto tetap tekun menggerakkan teropong dan tumpakan pada alat tenun gedogan miliknya. Jemarinya yang mulai keriput menata benang demi benang serat nanas dengan ketelitian tinggi. Anak tunggalnya, Rian, menatap heran sembari berkata, “Bapak, mengapa masih bertahan menenun satu helai kain selama seminggu? Di pabrik luar desa, mesin modern bisa menghasilkan puluhan kain dalam sehari dengan harga yang jauh lebih murah.”</p><p>Pak Tirto menghentikan gerak tumpakannya sejenak, menatap Rian dengan lembut. “Rian, kain buatan mesin itu memang cepat dan murah, tetapi mereka kehilangan ‘jiwa’. Setiap helai benang yang Bapak tenun tangan ini membawa kisah ketelitian, doa, dan warisan leluhur kita. Jika Bapak ikut beralih ke mesin, kelak tidak ada lagi generasi muda desa yang tahu sejarah keindahan tenun serat nanas khas tanah kelahiran kita.” Rian tertegun. Ia memandangi detail motif tenunan bapaknya yang memancarkan pesona keanggunan tiada tara, sesuatu yang tak pernah ia temukan pada kain cetakan pabrik yang kaku.</p>`;
+const FABEL=`<p>Di tepi bendungan sungai rimba, Burung Kepodang sering berkicau merdu memamerkan warna bulu kuning keemasannya yang indah di atas dahan tinggi. Ia kerap mengejek Berang-Berang yang bertubuh pendek, berbulu kecokelatan kusam, dan selalu berlepotan lumpur saat menyusun ranting kayu di dasar air. Berang-Berang tidak pernah membalas ejekan itu dan tetap bekerja keras merapikan struktur bendungan kayu demi menahan arus air sungai saat musim hujan.</p><p>Suatu sore, banjir bandang datang mendadak membawa muatan kayu-kayu besar dari hulu. Ranting tempat Burung Kepodang bertengger patah dihantam bah, menyebabkan sayap Kepodang basah kuyup dan ia terjebak di tengah pusaran air deras. Melihat kejadian itu, Berang-Berang tanpa ragu berenang melintasi arus kuat, menggunakan giginya yang tajam untuk mengapit tubuh Kepodang, lalu membawanya menyelam menerobos pusaran air menuju daratan yang aman. Burung Kepodang tertunduk malu atas kesombongannya selama ini.</p>`;
+/* Format soal: tipe pg|pgk|bs|isian · kat · jenjang ["SD","SMP","SMA"] · stimulus (HTML) · img (opsional)
+   pg: kunci=indeks opsi · pgk: kunci=[indeks] · bs: kunci=[true/false] · isian: kunci=["jawaban"] */
+const DEF=[
+{stimulus:GAMBUT,q:"Judul yang paling tepat dan representatif untuk mewakili keseluruhan isi bacaan di atas adalah …",opsi:["Dampak Pembangunan Saluran Kanalisasi terhadap Penyusutan Luas Hutan Tropis","Tantangan Ekonomi Masyarakat Desa dalam Mengembangkan Budi Daya Ikan Rawa","Restorasi Ekosistem Gambut Terpadu untuk Menjaga Keseimbangan Iklim dan Ekonomi","Perbandingan Kapasitas Penyimpanan Karbon Lahan Gambut dan Hutan Daratan"],kunci:2,bahas:"<b>Judul Teks (sedang).</b> Teks menguraikan peran ekologis gambut (P1), ancaman degradasi akibat kanalisasi (P2), strategi 3R yang mencakup aspek hidrologi dan ekonomi (P3), dan dampak jangka panjang restorasi (P4). Judul C merangkum semuanya. Opsi A dan D hanya mencakup detail di P2 dan P1, sedangkan B hanya detail penjelas di P3."},
+{stimulus:`<p>Bacalah kalimat-kalimat berikut secara cermat!</p><p>(1) Sejak dari pagi hari, para relawan kebersihan sudah berkumpul di tepi pantai.<br>(2) Tim peneliti menganalisis tingkat pencemaran mikroplastik pada muara sungai secara cermat.<br>(3) Banyak anak-anak yang bermain-main di pinggir air laut tanpa pengawasan orang tua.<br>(4) Demi untuk menjaga kelestarian lingkungan, kita harus menghentikan pembuangan sampah sembarangan.</p>`,q:"Kalimat efektif yang memenuhi kaidah kehematan kata dan kelengkapan struktur gramatikal ditunjukkan oleh nomor …",opsi:["(1)","(2)","(3)","(4)"],kunci:1,bahas:"<b>Kalimat Efektif (sedang).</b> Kalimat (2) berstruktur S-P-O-K baku dan hemat kata. Kalimat (1) redundan (<i>sejak dari</i>), kalimat (3) pleonastis (<i>banyak anak-anak</i>, <i>bermain-main</i>), kalimat (4) memakai konjungsi ganda (<i>demi untuk</i>)."},
+{stimulus:`<p>Bacalah paragraf berikut!</p><p>Seluruh [1] pemantauan limbah industri memiliki [2] yang tinggi sehingga membutuhkan ketelitian ekstra dari para petugas. Dinas lingkungan hidup telah menetapkan [3] prosedur pengujian laboratorium untuk menjaga akurasi data. Selain itu, penataan [4] koordinasi antarpetugas diperbaiki agar pelaporan dapat berjalan secara sistematis.</p>`,q:"Kata baku yang paling tepat untuk mengisi bagian rumpang [1], [2], [3], dan [4] secara berurutan adalah …",opsi:["aktifitas, komplekstitas, standartisasi, hirarki","aktivitas, kompleksitas, standarisasi, hirarkhi","aktifitas, kompleksitas, standarisasi, hierarki","aktivitas, kompleksitas, standardisasi, hierarki"],kunci:3,bahas:"<b>Penulisan Kata (sedang).</b> Bentuk baku: <i>aktivitas</i>, <i>kompleksitas</i>, <i>standardisasi</i>, <i>hierarki</i>. Opsi A, B, dan C memuat bentuk tidak baku seperti aktifitas, komplekstitas, standarisasi, standartisasi, hirarki, dan hirarkhi."},
+{stimulus:`<p>Cermati teks informasi berikut!</p><p>Pada bulan [1: Oktober / oktober], [2: bupati Blitar / Bupati Blitar] meresmikan fasilitas pengolahan sampah organik di kawasan [3: Selat Lombok / selat Lombok]. Kegiatan edukasi budaya ini dihadiri oleh tokoh masyarakat dari [4: suku Sasak / Suku Sasak] yang berdomisili di pesisir.</p>`,q:"Penulisan huruf kapital yang seluruhnya benar untuk melengkapi bagian bertanda angka di atas adalah …",opsi:["Oktober, Bupati Blitar, Selat Lombok, suku Sasak","oktober, bupati Blitar, selat Lombok, Suku Sasak","Oktober, bupati Blitar, Selat lombok, suku sasak","oktober, Bupati Blitar, Selat Lombok, Suku sasak"],kunci:0,bahas:"<b>Huruf Kapital (sedang).</b> <i>Oktober</i> (nama bulan), <i>Bupati Blitar</i> (jabatan yang diikuti nama daerah), <i>Selat Lombok</i> (nama geografis), <i>suku Sasak</i> (kata <i>suku</i> huruf kecil, nama sukunya kapital). Opsi lain salah pada nama bulan, jabatan, nama geografis, atau nama suku."},
+{stimulus:GAMBUT,q:"Ide pokok Paragraf 3 pada teks bacaan di atas adalah …",opsi:["Alasan utama terjadinya bencana kebakaran tahunan di kawasan lahan gambut","Pelaksanaan strategi restorasi ekosistem gambut secara terpadu melalui pendekatan 3R","Jenis-jenis tanaman komersial yang cocok dibudidayakan pada lahan gambut kering","Kerugian ekonomi masyarakat akibat pembangunan sekat kanal di sepanjang muara sungai"],kunci:1,bahas:"<b>Ide Pokok (sedang).</b> Paragraf 3 menjelaskan langkah restorasi terpadu dengan strategi 3R (<i>Rewetting</i>, <i>Revegetation</i>, <i>Revitalisation</i>). Opsi A adalah isi Paragraf 2; opsi C dan D hanyalah rincian pendukung yang bukan inti paragraf."},
+{stimulus:GAMBUT,q:"Simpulan yang paling tepat dan komprehensif berdasarkan keseluruhan isi bacaan tersebut adalah …",opsi:["Restorasi lahan gambut melalui program 3R memerlukan dukungan sosial-ekonomi masyarakat lokal agar fungsi hidrologi kawasan dapat pulih sepenuhnya.","Konversi lahan gambut menjadi area perkebunan merupakan penyebab utama bencana kebakaran sehingga seluruh aktivitas ekonomi masyarakat di sekitar hutan harus dihentikan.","Pemulihan ekosistem gambut melalui penerapan strategi 3R secara terpadu sangat penting untuk mencegah pelepasan emisi karbon serta menjamin keberlanjutan lingkungan dan ekonomi.","Pembasahan kembali (<i>rewetting</i>) dengan sekat kanal merupakan langkah tunggal yang paling menentukan keberhasilan restorasi gambut tanpa memerlukan perbaikan ekonomi warga."],kunci:2,bahas:"<b>Simpulan (sulit).</b> Simpulan yang memadukan keempat paragraf adalah C: 3R terpadu mencegah pelepasan emisi karbon sekaligus menjamin keberlanjutan lingkungan dan ekonomi. Opsi A mengabaikan pencegahan emisi karbon, B berlebihan (over-generalisasi), D bertentangan dengan Paragraf 3–4 yang juga menekankan pemulihan ekonomi warga."},
+{stimulus:TABEL,q:"Pernyataan yang paling tepat dan sesuai dengan hasil analisis kecenderungan data tabel di atas adalah …",opsi:["Tingginya nilai Indeks Kualitas Air (IKA) cenderung sejalan dengan banyaknya spesies ikan endemik serta berlawanan dengan luas tutupan eceng gondok.","Danau Cempaka memiliki kondisi perairan paling mendukung bagi kehidupan ikan endemik karena memuat kadar fosfat paling tinggi.","Danau Beringin memiliki tingkat kebersihan air yang lebih baik daripada Danau Delima karena tutupan eceng gondoknya lebih luas.","Rendahnya kadar fosfat pada Danau Anggrung menyebabkan populasi eceng gondok tumbuh paling pesat melampaui danau lainnya."],kunci:0,bahas:"<b>Tabel, Grafik, dan Bagan (sulit).</b> Danau Anggrung: IKA tertinggi (82), endemik terbanyak (14 jenis), eceng gondok terendah (8%). Danau Cempaka sebaliknya: IKA 38, endemik 3 jenis, eceng gondok 78%. Jadi IKA tinggi cenderung sejalan dengan banyaknya ikan endemik dan berlawanan dengan tutupan eceng gondok. Opsi B, C, dan D bertentangan dengan angka pada tabel."},
+{stimulus:INFO,q:"Seorang siswa membawa 2 kg botol plastik bening PET (sudah dicuci bersih dan dilepas labelnya) serta 1 kg kemasan plastik makanan ringan campuran (Kategori C). Ia menargetkan memperoleh Paket Kupon Beasiswa Buku. Berdasarkan alur infografik, analisis dan tindakan yang paling tepat dilakukan siswa tersebut adalah …",opsi:["Menggabungkan seluruh sampah tanpa dibersihkan agar langsung memperoleh poin total Kategori A sebesar 300 poin untuk menukarkan kupon beasiswa buku.","Membersihkan 2 kg botol PET dan menyetor 1 kg kemasan campuran untuk memperoleh 220 poin, lalu menambah setidaknya 1 kg tutup HDPE agar memenuhi syarat kupon beasiswa buku.","Membuang 1 kg kemasan campuran karena tidak bernilai poin dan langsung menukarkan 2 kg botol PET dengan paket kupon beasiswa buku secara langsung.","Menyetor 2 kg botol PET dalam keadaan kotor sehingga mendapatkan 200 poin dan menukarkannya dengan paket kupon pot tanaman."],kunci:1,bahas:"<b>Infografik (sulit).</b> 2 kg PET bersih = 2 × 100 = 200 poin; 1 kg kemasan campuran = 1 × 20 = 20 poin; total 220 poin. Kupon Beasiswa Buku butuh minimal 250 poin (kurang 30), jadi siswa perlu menambah setidaknya 1 kg tutup HDPE (80 poin) sehingga total 300 poin. Opsi A melanggar aturan potongan 50% untuk sampah kotor, C salah karena 220 &lt; 250, D salah karena PET kotor hanya bernilai 2 × 50 = 100 poin."},
+{stimulus:`<p>Perhatikan kalimat dasar berikut!</p><p><i>“Para insinyur muda itu menguji ketahanan struktur jembatan baja di laboratorium sentral.”</i></p>`,q:"Kalimat di bawah ini yang memiliki susunan fungsi sintaksis yang sama persis dengan kalimat di atas adalah …",opsi:["Kemarin pagi para petani memanen hasil bumi dengan gembira di sawah.","Tim peneliti sains mengamati perilaku koloni serangga air di kawasan muara.","Siswa kelas VI belajar dengan sangat tekun menjelang ujian nasional.","Di laboratorium sekolah, adik membuat kerajinan dari tanah liat."],kunci:1,bahas:"<b>Pola Kalimat (sedang).</b> Kalimat acuan: <i>Para insinyur muda itu</i> (S) / <i>menguji</i> (P) / <i>ketahanan struktur jembatan baja</i> (O) / <i>di laboratorium sentral</i> (K), yaitu S-P-O-K. Opsi B: <i>Tim peneliti sains</i> (S) / <i>mengamati</i> (P) / <i>perilaku koloni serangga air</i> (O) / <i>di kawasan muara</i> (K), pola yang identik. Opsi A berpola K-S-P-O-K-K, C berpola S-P-K-K, D berpola K-S-P-O."},
+{stimulus:`<p>Bacalah percakapan berikut secara cermat!</p><p><b>Tio:</b> “Mengapa lampu di lorong kelas tetap menyala terang saat matahari sudah tinggi seperti ini, Maya?”</p><p><b>Maya:</b> “Banyak teman-teman yang belum terbiasa mematikannya setelah piket pagi, Tio. Padahal, jika sakelar dipadamkan saat ventilasi dan jendela sudah cukup terang, sekolah kita bisa menghemat daya listrik dalam jumlah besar.”</p><p><b>Tio:</b> “Kamu benar. Kepekaan diri untuk mematikan sakelar ternyata sangat menentukan efisiensi energi bangunan sekolah kita.”</p><p><b>Maya:</b> “Mari kita ajukan usulan ke guru pembina untuk membuat stiker pengingat hemat energi dan membentuk tim patroli energi kelas.”</p>`,q:"Berdasarkan alur percakapan tersebut, hubungan antara tanggapan Tio dan usulan Maya menunjukkan bahwa …",opsi:["Kesadaran Tio akan pentingnya kepekaan diri memicu ide Maya untuk menghadirkan langkah nyata berupa edukasi visual dan pengawasan kelompok.","Kebiasaan membiarkan lampu menyala disebabkan oleh kurangnya jumlah ventilasi udara di sepanjang lorong kelas.","Maya menolak pendapat Tio karena pembuatan stiker pengingat membutuhkan anggaran biaya yang sangat besar.","Tio dan Maya sepakat untuk mengganti seluruh sakelar lampu lorong dengan sistem sensor otomatis."],kunci:0,bahas:"<b>Teks Percakapan (sedang).</b> Tio menyadari pentingnya kepekaan diri, lalu Maya menanggapinya dengan usulan konkret: stiker pengingat (edukasi visual) dan tim patroli (pengawasan kelompok). Opsi B, C, dan D bertentangan dengan isi dialog."},
+{stimulus:GAMBUT,q:"Makna kata <i>degradasi</i> pada paragraf kedua teks bacaan utama berdasarkan konteks ekologi adalah …",opsi:["Pemulihan kembali fungsi vegetasi hutan seperti kondisi semula","Penambahan kadar nutrisi organik secara buatan pada lahan pertanian","Penurunan kualitas atau kemunduran kondisi fisik dan ekologis lingkungan","Pengalihan kepemilikan lahan dari pemerintah kepada pihak swasta"],kunci:2,bahas:"<b>Makna Kata (sedang).</b> Pada frasa <i>degradasi ekosistem perairan dan daratan</i>, <i>degradasi</i> berarti penurunan kualitas atau kerusakan kondisi lingkungan. Opsi A bermakna restorasi, B pemupukan, D alih kepemilikan."},
+{stimulus:TENUN,q:"Amanat tersirat yang paling tepat dari teks narasi di atas adalah …",opsi:["Penggunaan teknologi modern pabrik harus diprioritaskan untuk menggantikan seluruh pekerjaan tangan manusia.","Ketekunan merawat warisan budaya dan keahlian tradisional memiliki nilai luhur yang tidak dapat digantikan oleh kecepatan mesin.","Pekerjaan yang membutuhkan waktu lama sebaiknya ditinggalkan demi mengejar keuntungan ekonomi jangka pendek.","Seorang anak hendaknya memaksa orang tuanya untuk mengikuti perkembangan zaman agar tidak tertinggal."],kunci:1,bahas:"<b>Teks Narasi (sulit).</b> Penjelasan Pak Tirto bahwa tenun tangan memiliki “jiwa”, doa, dan warisan leluhur menegaskan bahwa merawat warisan budaya bernilai luhur dan tak tergantikan oleh kecepatan mesin. Opsi A, C, dan D bertentangan dengan pesan moral cerita."},
+{stimulus:`<p>Perhatikan kalimat-kalimat berikut.</p>`,q:"Penggunaan tanda baca koma (,) yang tepat dan sesuai dengan kaidah EYD V terdapat pada kalimat …",opsi:["Meskipun cuaca buruk menerpa kawasan pesisir, para nelayan tradisional tetap mengamankan perahu mereka ke daratan.","Ibu membeli bayam, wortel, dan cabai, di pasar tradisional tetapi adik tidak menyukainya.","Oleh karena itu kita harus menjaga kebersihan lingkungan sekolah, agar terhindar dari penyakit.","Siswa yang mengenakan sepatu hitam itu, merupakan juara nasional olimpiade matematika."],kunci:0,bahas:"<b>Tanda Baca Koma (sedang).</b> Opsi A tepat: koma memisahkan anak kalimat yang mendahului induk kalimat. Opsi B salah menaruh koma setelah <i>cabai</i> dan tidak menaruhnya sebelum <i>tetapi</i>; C tidak memberi koma setelah <i>Oleh karena itu</i> dan keliru menaruh koma sebelum <i>agar</i>; D memisahkan subjek dan predikat dengan koma."},
+{stimulus:FABEL,q:"Watak tokoh Berang-Berang dalam fabel tersebut beserta bukti perilakunya yang tepat adalah …",opsi:["Tekun dan penolong, dibuktikan dengan tetap bekerja membangun bendungan tanpa menghiraukan ejekan serta rela menyelam menembus arus banjir demi menyelamatkan Kepodang.","Cerdik dan pendendam, dibuktikan dengan membiarkan Kepodang terjebak di pusaran air terlebih dahulu sebelum memberikan pertolongan.","Pemalas dan pasrah, dibuktikan dengan hanya berdiam diri berlepotan lumpur di tepi bendungan sungai.","Sombong dan acuh, dibuktikan dengan menyuruh Kepodang untuk belajar berenang sendiri saat banjir tiba."],kunci:0,bahas:"<b>Unsur-Unsur Fabel (sedang).</b> Berang-Berang tekun (tetap membangun bendungan) dan penolong (menyelam menembus arus deras untuk menyelamatkan Kepodang). Opsi B, C, dan D bertentangan dengan fakta dalam fabel."},
+{stimulus:`<p>Cermati ilustrasi berikut!</p><p>Pak Hendra adalah seorang peneliti senior di lembaga riset nasional. Meskipun telah menemukan berbagai inovasi teknologi tepat guna yang diakui dunia internasional, beliau tidak pernah memamerkan pencapaiannya di media sosial atau menyombongkan diri saat berbicara. Beliau selalu bersikap sangat tenang, namun karya-karyanya memberikan dampak nyata yang sangat besar bagi kesejahteraan masyarakat desa.</p>`,q:"Peribahasa yang paling tepat untuk menggambarkan sifat Pak Hendra pada ilustrasi di atas adalah …",opsi:["Besar pasak daripada tiang.","Tong kosong nyaring bunyinya.","Air tenang menghanyutkan.","Air berolak tanda tak dalam."],kunci:2,bahas:"<b>Ungkapan dan Peribahasa (sulit).</b> <i>Air tenang menghanyutkan</i> menggambarkan orang yang tenang dan tidak pamer, tetapi berilmu luas dan mampu berkarya besar. Opsi A berarti pengeluaran lebih besar daripada pendapatan; B dan D berarti orang yang banyak bicara biasanya kurang berilmu."}
+].map(q=>({jenjang:["SD"],kat:"Bahasa Indonesia",tipe:"pg",...q}));
+let BANK=DEF;try{const b=JSON.parse(localStorage.getItem(CFG.bank)||"null");if(Array.isArray(b)&&b.length)BANK=b}catch(e){}
+const $=s=>document.querySelector(s),app=$("#app"),L=i=>String.fromCharCode(65+i);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const mmss=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+let S=null,tm=null,live=false;
+const save=()=>{try{localStorage.setItem(CFG.key,JSON.stringify(S))}catch(e){}};
+const load=()=>{try{return JSON.parse(localStorage.getItem(CFG.key)||"null")}catch(e){return null}};
+function modal(h){let m=$("#md");if(!m){m=document.createElement("div");m.id="md";m.className="md";document.body.appendChild(m)}m.innerHTML=`<div class="box" role="dialog">${h}</div>`}
+const closeM=()=>{const m=$("#md");m&&m.remove()};
+$("#th").onclick=()=>{const r=document.documentElement,d=r.dataset.theme?r.dataset.theme=="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=d?"light":"dark"};
+const done=(q,a)=>a==null?false:q.tipe=="pg"?true:q.tipe=="pgk"?a.length>0:q.tipe=="bs"?a.length==q.opsi.length&&a.every(x=>x!==null):String(a).trim()!=="";
+const norm=s=>String(s).trim().toLowerCase().replace(/\s+/g," ");
+const ok=(q,a)=>!done(q,a)?false:q.tipe=="pg"?a===q.kunci:q.tipe=="pgk"?JSON.stringify(a)==JSON.stringify([...q.kunci].sort()):q.tipe=="bs"?JSON.stringify(a)==JSON.stringify(q.kunci):[].concat(q.kunci).map(norm).includes(norm(a));
+const fmt=(q,a)=>!done(q,a)?"Tidak dijawab":q.tipe=="pg"?L(a)+". "+q.opsi[a]:q.tipe=="pgk"?a.map(i=>L(i)).join(", "):q.tipe=="bs"?a.map((v,i)=>(i+1)+": "+(v?"Benar":"Salah")).join(" · "):a;
+const kfmt=q=>q.tipe=="pg"?L(q.kunci)+". "+q.opsi[q.kunci]:q.tipe=="pgk"?q.kunci.map(i=>L(i)).join(", "):q.tipe=="bs"?q.kunci.map((v,i)=>(i+1)+": "+(v?"Benar":"Salah")).join(" · "):[].concat(q.kunci)[0];
+
+/* ---------- LOGIN ---------- */
+function login(){clearInterval(tm);live=false;unlock();const old=load();
+const resume=old&&!old.done&&old.end>Date.now()?`<div class="card" style="margin-bottom:14px;border-color:var(--pri)"><b>Ujian ${esc(old.u.nama)} masih berjalan.</b><div class="acts"><button class="btn pri" onclick="S=load();exam()">Lanjutkan ujian</button></div></div>`:old&&old.done?`<div class="card" style="margin-bottom:14px"><b>Hasil terakhir: ${esc(old.u.nama)}</b><div class="acts"><button class="btn" onclick="S=load();result()">Lihat hasil</button></div></div>`:"";
+app.innerHTML=`${resume}<div class="hero"><div><h1>Siap balapan<br>otak di lintasan?</h1><p class="mut" style="max-width:44ch">Simulasi babak penyisihan The Champion Race: soal literasi dan numerasi bergaya AKM, dikerjakan melawan waktu.</p></div>
+<form class="card" id="f" autocomplete="off"><h2>Daftar peserta</h2>
+<label for="nm">Nama peserta</label><input class="in" id="nm" maxlength="60" placeholder="Nama lengkap">
+<label>Jenjang</label><div class="seg">${["SD","SMP","SMA"].map((j,i)=>`<label><input type="radio" name="jn" value="${j}" ${i?"":"checked"}><span>${j}</span></label>`).join("")}</div>
+<label for="sk">Asal sekolah</label><input class="in" id="sk" maxlength="80" placeholder="Contoh: SDN 1 Kediri">
+<p class="err" id="er" role="alert"></p><button class="btn pri big">Masuk ke lobi</button>
+<p class="leg" style="margin:12px 0 0"><a href="#" id="ad" class="mut">Panel admin</a></p></form></div>`;
+$("#ad").onclick=e=>{e.preventDefault();admin()};
+$("#f").onsubmit=e=>{e.preventDefault();const nama=$("#nm").value.trim(),sekolah=$("#sk").value.trim(),jenjang=document.querySelector("[name=jn]:checked").value;
+if(nama.length<3)return $("#er").textContent="Isi nama peserta minimal 3 huruf.";
+if(sekolah.length<3)return $("#er").textContent="Isi asal sekolah.";
+let qs=BANK.filter(q=>!q.jenjang||q.jenjang.includes(jenjang));if(!qs.length)return $("#er").textContent="Belum ada soal untuk jenjang "+jenjang+".";
+qs=JSON.parse(JSON.stringify(qs));if(CFG.acak)for(let i=qs.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[qs[i],qs[j]]=[qs[j],qs[i]]}
+S={u:{nama,jenjang,sekolah},qs,a:{},f:{},i:0,warn:0,done:false,dur:CFG.durasi[jenjang]};rules()}}
+
+/* ---------- ATURAN ---------- */
+function rules(){app.innerHTML=`<div class="card" style="max-width:640px;margin:0 auto"><h1 style="font-size:36px">Halo, ${esc(S.u.nama)}</h1><p class="mut" style="margin:4px 0">${esc(S.u.sekolah)} · Jenjang ${S.u.jenjang}</p>
+<div class="pills"><span class="pill">${S.qs.length} soal</span><span class="pill">${S.dur} menit</span><span class="pill">Literasi + Numerasi</span></div>
+<h2>Aturan lomba</h2><ul class="rules"><li>Waktu berjalan sejak tombol Mulai ditekan dan tidak bisa dijeda.</li><li>Jawaban tersimpan otomatis. Kamu bisa kembali ke soal mana pun dan menandainya ragu-ragu.</li><li>Jangan pindah tab atau keluar dari layar penuh. Pelanggaran ke-${CFG.maxLanggar} mengakhiri ujian otomatis.</li><li>Jika keluar dari layar penuh, layar ujian terkunci sampai kamu kembali ke layar penuh.</li></ul>
+<button class="btn pri big" id="go">Mulai balapan</button><div class="acts"><button class="btn" onclick="login()">Ubah data</button></div></div>`;
+$("#go").onclick=()=>{try{document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}let n=3;const t=()=>{if(!n){modal('<div class="cd">GO!</div>');return setTimeout(()=>{closeM();S.start=Date.now();S.end=S.start+S.dur*60000;save();exam()},600)}modal(`<div class="cd">${n}</div>`);n--;setTimeout(t,800)};t()}}
+
+/* ---------- UJIAN ---------- */
+
+function exam(){live=true;
+app.innerHTML=`<div class="card"><div class="hud"><div class="who">${esc(S.u.nama)}<small>${esc(S.u.sekolah)} · ${S.u.jenjang}</small></div><div class="sp"></div><div class="fd" id="cnt" style="font-size:20px"></div><div class="timer" id="tm">--:--</div></div>
+</div>
+<div class="main" style="margin-top:16px"><div class="card" id="qbox"></div><div class="card"><b class="fd" style="font-size:20px">Navigasi soal</b><div class="nav" id="nav"></div><div class="leg">Biru: terjawab · Titik kuning: ragu-ragu</div><div class="acts"><button class="btn pri" style="width:100%" id="fin">Selesaikan ujian</button></div></div></div>`;
+$("#fin").onclick=confirmFin;drawQ();drawNav();tick();clearInterval(tm);tm=setInterval(tick,500);fsLock()}
+function drawQ(){const q=S.qs[S.i],a=S.a[S.i];let h=`<div class="meta"><span class="tag">${q.kat||"Umum"}</span><span class="mut">Soal ${S.i+1} dari ${S.qs.length}</span>${S.f[S.i]?'<span class="tag w">Ragu-ragu</span>':""}</div>`;
+if(q.stimulus)h+=`<div class="stim">${q.stimulus}</div>`;h+=`<div class="qt">${q.q}</div>`;if(q.img)h+=`<img class="qi" src="${q.img}" alt="">`;
+if(q.tipe=="pg")h+=q.opsi.map((o,i)=>`<button class="opt ${a===i?"on":""}" onclick="pick(${i})"><b>${L(i)}</b><span>${o}</span></button>`).join("");
+else if(q.tipe=="pgk")h+=`<p class="mut">Pilih lebih dari satu jawaban.</p>`+q.opsi.map((o,i)=>{const on=(a||[]).includes(i);return `<button class="opt ${on?"on":""}" onclick="pick(${i})"><b>${on?"✓":L(i)}</b><span>${o}</span></button>`}).join("");
+else if(q.tipe=="bs")h+=q.opsi.map((o,i)=>{const v=(a||[])[i];return `<div class="bs"><span>${o}</span><div><button class="${v===true?"on":""}" onclick="pick(${i},true)">Benar</button><button class="${v===false?"on":""}" onclick="pick(${i},false)">Salah</button></div></div>`}).join("");
+else h+=`<input class="in" id="isi" placeholder="Ketik jawabanmu" value="${esc(a||"")}" oninput="pick(this.value)" autocomplete="off">`;
+h+=`<div class="acts"><button class="btn" onclick="go(-1)" ${S.i?"":"disabled"}>Sebelumnya</button><button class="btn" onclick="flag()">${S.f[S.i]?"Hapus tanda ragu":"Ragu-ragu"}</button><button class="btn pri" onclick="go(1)" ${S.i<S.qs.length-1?"":"disabled"}>Selanjutnya</button></div>`;$("#qbox").innerHTML=h}
+function drawNav(){$("#nav").innerHTML=S.qs.map((q,i)=>`<button class="${i==S.i?"cur":done(q,S.a[i])?"ans":""} ${S.f[i]?"fl":""}" onclick="S.i=${i};save();drawQ();drawNav()" aria-label="Soal ${i+1}">${i+1}</button>`).join("");
+const n=S.qs.filter((q,i)=>done(q,S.a[i])).length;$("#cnt").textContent=n+" / "+S.qs.length+" terjawab"}
+function pick(i,v){const q=S.qs[S.i];
+if(q.tipe=="pg")S.a[S.i]=i;else if(q.tipe=="pgk"){const s=new Set(S.a[S.i]||[]);s.has(i)?s.delete(i):s.add(i);S.a[S.i]=[...s].sort((x,y)=>x-y)}
+else if(q.tipe=="bs"){const x=(S.a[S.i]||new Array(q.opsi.length).fill(null)).slice();x[i]=v;S.a[S.i]=x}else S.a[S.i]=i;
+save();drawNav();if(q.tipe!="isian")drawQ()}
+const go=d=>{S.i=Math.min(S.qs.length-1,Math.max(0,S.i+d));save();drawQ();drawNav()};
+const flag=()=>{S.f[S.i]=!S.f[S.i];save();drawQ();drawNav()};
+function tick(){const left=(S.end-Date.now())/1000,t=$("#tm");if(!t)return;t.textContent=mmss(left);t.classList.toggle("low",left<300);
+if(left<=0)finish("Waktu habis")}
+function confirmFin(){const n=S.qs.filter((q,i)=>done(q,S.a[i])).length,k=S.qs.length-n,f=Object.values(S.f).filter(Boolean).length;
+modal(`<h2>Selesaikan ujian?</h2><p>${n} soal terjawab${k?`, <b class="rx">${k} soal belum dijawab</b>`:""}${f?`, ${f} soal ditandai ragu-ragu`:""}. Setelah selesai, jawaban tidak bisa diubah.</p><div class="acts"><button class="btn" onclick="closeM()">Kembali</button><button class="btn pri" onclick="closeM();finish('Selesai')">Ya, selesaikan</button></div>`)}
+function violation(){S.warn++;save();if(S.warn>=CFG.maxLanggar){closeM();return finish("Pelanggaran aturan")}modal(`<h2>Peringatan ${S.warn} dari ${CFG.maxLanggar}</h2><p>Kamu meninggalkan halaman ujian. Tetap di halaman ini sampai selesai. Pelanggaran ke-${CFG.maxLanggar} mengakhiri ujian.</p><div class="acts"><button class="btn pri" onclick="closeM();try{document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}">Lanjut mengerjakan</button></div>`)}
+document.addEventListener("visibilitychange",()=>{if(live&&document.hidden)violation()});
+["contextmenu","copy","cut","paste"].forEach(ev=>document.addEventListener(ev,e=>{if(live)e.preventDefault()}));
+addEventListener("beforeunload",e=>{if(live){e.preventDefault();e.returnValue=""}});
+addEventListener("keydown",e=>{if(!live||e.target.tagName=="INPUT"||$("#md")||$("#fsm"))return;if(e.key=="ArrowRight")go(1);else if(e.key=="ArrowLeft")go(-1);else if(e.key=="f")flag();else if(/^[1-9]$/.test(e.key)){const q=S.qs[S.i];if(q.tipe=="pg"||q.tipe=="pgk"){const i=+e.key-1;if(i<q.opsi.length)pick(i)}}});
+
+/* ---------- KUNCI LAYAR PENUH ---------- */
+let FSOK=!!document.fullscreenEnabled;
+const reqFs=()=>{try{return document.documentElement.requestFullscreen()}catch(e){return Promise.reject(e)}};
+function unlock(){const m=$("#fsm");m&&m.remove()}
+function fsLock(){if(!live||!FSOK||document.fullscreenElement)return unlock();if($("#fsm"))return;document.activeElement&&document.activeElement.blur();
+const m=document.createElement("div");m.id="fsm";m.className="md fs";m.innerHTML=`<div class="box" role="alertdialog"><h2>Layar ujian terkunci</h2><p>Kamu keluar dari layar penuh, jadi soal disembunyikan. Waktu tetap berjalan. Kembali ke layar penuh untuk melanjutkan.</p><div class="acts"><button class="btn pri big" id="bf">Kembali ke layar penuh</button></div></div>`;document.body.appendChild(m);
+$("#bf").onclick=()=>reqFs().then(unlock).catch(()=>{FSOK=false;unlock()})}
+document.addEventListener("fullscreenchange",()=>{if(live)document.fullscreenElement?unlock():fsLock()});
+
+/* ---------- HASIL ---------- */
+function finish(why){if(S.done)return;live=false;clearInterval(tm);closeM();unlock();try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}
+const cat={};let b=0,n=0;S.qs.forEach((q,i)=>{const a=S.a[i],d=done(q,a),o=ok(q,a),k=q.kat||"Umum";cat[k]=cat[k]||{b:0,t:0};cat[k].t++;if(d)n++;if(o){b++;cat[k].b++}});
+S.done=true;S.res={b,n,t:S.qs.length,cat,why,used:Math.min(S.dur*60,(Date.now()-S.start)/1000),at:Date.now()};save();result()}
+function result(){live=false;const r=S.res,sc=Math.round(r.b/r.t*100),kt=Math.round(r.n/r.t*100),ak=r.n?Math.round(r.b/r.n*100):0;
+const pr=sc>=85?"Juara lintasan":sc>=70?"Finalis potensial":sc>=50?"Terus berlatih, kamu sudah di jalur":"Ayo ulang dan kejar lagi";
+app.innerHTML=`<div class="card"><div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap"><div class="ring" style="--p:${sc}"><div>${sc}</div></div><div style="flex:1;min-width:220px"><h1 style="font-size:38px">${pr}</h1><p class="mut" style="margin:4px 0">${esc(S.u.nama)} · ${esc(S.u.sekolah)} · Jenjang ${S.u.jenjang}</p><p class="mut" style="margin:0">${r.why} · waktu ${mmss(r.used)} dari ${S.dur}:00${S.warn?` · ${S.warn} pelanggaran`:""}</p></div></div>
+<div class="stats"><div class="stat">Benar<b>${r.b} / ${r.t}</b></div><div class="stat">Ketuntasan<b>${kt}%</b></div><div class="stat">Akurasi<b>${ak}%</b></div></div>
+<h2>Per kategori</h2>${Object.entries(r.cat).map(([k,v])=>`<div>${k}: ${v.b} dari ${v.t}</div><div class="bar"><i style="width:${v.b/v.t*100}%"></i></div>`).join("")}
+<div class="acts noprint"><button class="btn pri" onclick="print()">Cetak hasil</button><button class="btn" onclick="login()">Peserta baru</button></div></div>
+<h2 style="margin:22px 0 4px">Pembahasan</h2>${S.qs.map((q,i)=>{const a=S.a[i],o=ok(q,a);return `<details><summary><span class="${o?"rv":"rx"}">${o?"Benar":done(q,a)?"Salah":"Kosong"}</span> · Soal ${i+1} (${q.kat||"Umum"})</summary>${q.stimulus?`<div class="stim" style="margin-top:10px">${q.stimulus}</div>`:""}<p><b>${q.q}</b></p><p>Jawabanmu: ${esc(fmt(q,a))}<br>Kunci: <b>${esc(kfmt(q))}</b></p>${q.bahas?`<p class="mut">${q.bahas}</p>`:""}</details>`}).join("")}`;scrollTo(0,0)}
+
+/* ---------- ADMIN ---------- */
+function admin(){modal(`<h2>Panel admin</h2><label for="pn">PIN</label><input class="in" id="pn" type="password"><p class="err" id="ae"></p><div class="acts"><button class="btn" onclick="closeM()">Tutup</button><button class="btn pri" id="ok">Buka</button></div>`);
+$("#ok").onclick=()=>{if($("#pn").value!==CFG.pin)return $("#ae").textContent="PIN salah.";
+modal(`<h2>Bank soal (${BANK.length})</h2><p class="mut">Tempel soal dalam format JSON. Tersimpan di browser ini saja.</p><textarea class="in" id="bk" spellcheck="false">${esc(JSON.stringify(BANK,null,1))}</textarea><p class="err" id="ae"></p><div class="acts"><button class="btn" onclick="closeM()">Tutup</button><button class="btn" id="rs">Kembali ke contoh</button><button class="btn pri" id="sv">Simpan</button></div>`);
+$("#sv").onclick=()=>{try{const b=JSON.parse($("#bk").value);if(!Array.isArray(b)||!b.length||b.some(q=>!q.q||!q.tipe||q.kunci===undefined))throw 0;localStorage.setItem(CFG.bank,JSON.stringify(b));BANK=b;closeM()}catch(e){$("#ae").textContent="Format tidak valid: tiap soal wajib punya q, tipe, dan kunci."}};
+$("#rs").onclick=()=>{try{localStorage.removeItem(CFG.bank)}catch(e){}BANK=DEF;closeM()}}}
+login();
+</script></body></html>
