@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="id"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TCR Simulasi – Babak Penyisihan (Copy)</title>
+<title>TCR Simulasi – Babak Penyisihan</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#eef2fb;--card:#fff;--ink:#0e1a38;--mut:#5a6785;--line:#d9e0f0;--pri:#2450f0;--onpri:#fff;--acc:#ffb800;--ok:#0b9b62;--bad:#df3f4a;--soft:#e8edfd;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -96,6 +96,7 @@ summary{cursor:pointer;font-weight:700}
 .rv{color:var(--ok)}.rx{color:var(--bad)}
 textarea.in{min-height:240px;font:13px ui-monospace,monospace}
 html{-webkit-text-size-adjust:100%}button{touch-action:manipulation}
+body.ex{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}body.ex input{-webkit-user-select:text;user-select:text}
 .logo{min-width:0;white-space:nowrap}.lt{overflow:hidden;text-overflow:ellipsis}.sub{font-weight:600}.lg{flex:none}
 @media(max-width:560px){
 .top{padding:8px 12px;gap:8px}.logo{font-size:18px;gap:7px}.lg{height:30px}.sub{display:none}.top .btn{padding:7px 12px;font-size:14px}
@@ -174,7 +175,7 @@ const fmt=(q,a)=>!done(q,a)?"Tidak dijawab":q.tipe=="pg"?L(a)+". "+q.opsi[a]:q.t
 const kfmt=q=>q.tipe=="pg"?L(q.kunci)+". "+q.opsi[q.kunci]:q.tipe=="pgk"?q.kunci.map(i=>L(i)).join(", "):q.tipe=="bs"?q.kunci.map((v,i)=>(i+1)+": "+(v?"Benar":"Salah")).join(" · "):[].concat(q.kunci)[0];
 
 /* ---------- LOGIN ---------- */
-function login(){clearInterval(tm);live=false;unlock();const old=load();
+function login(){clearInterval(tm);live=false;document.body.classList.remove("ex");unlock();const old=load();
 const resume=old&&!old.done&&old.end>Date.now()?`<div class="card" style="margin-bottom:14px;border-color:var(--pri)"><b>Ujian ${esc(old.u.nama)} masih berjalan.</b><div class="acts"><button class="btn pri" onclick="S=load();exam()">Lanjutkan ujian</button></div></div>`:old&&old.done?`<div class="card" style="margin-bottom:14px"><b>Hasil terakhir: ${esc(old.u.nama)}</b><div class="acts"><button class="btn" onclick="S=load();result()">Lihat hasil</button></div></div>`:"";
 app.innerHTML=`${resume}<div class="hero"><div><h1>Siap balapan<br>otak di lintasan?</h1><p class="mut" style="max-width:44ch">Simulasi babak penyisihan The Champion Race: soal literasi dan numerasi bergaya AKM, dikerjakan melawan waktu.</p></div>
 <form class="card" id="f" autocomplete="off"><h2>Daftar peserta</h2>
@@ -200,7 +201,7 @@ $("#go").onclick=()=>{try{document.documentElement.requestFullscreen().catch(()=
 
 /* ---------- UJIAN ---------- */
 
-function exam(){live=true;
+function exam(){live=true;document.body.classList.add("ex");
 app.innerHTML=`<div class="card"><div class="hud"><div class="who">${esc(S.u.nama)}<small>${esc(S.u.sekolah)} · ${S.u.jenjang}</small></div><div class="sp"></div><div class="fd" id="cnt" style="font-size:20px"></div><div class="timer" id="tm">--:--</div></div>
 </div>
 <div class="main" style="margin-top:16px"><div class="card" id="qbox"></div><div class="card"><b class="fd" style="font-size:20px">Navigasi soal</b><div class="nav" id="nav"></div><div class="leg">Biru: terjawab · Titik kuning: ragu-ragu</div><div class="acts"><button class="btn pri" style="width:100%" id="fin">Selesaikan ujian</button></div></div></div>`;
@@ -226,7 +227,11 @@ function confirmFin(){const n=S.qs.filter((q,i)=>done(q,S.a[i])).length,k=S.qs.l
 modal(`<h2>Selesaikan ujian?</h2><p>${n} soal terjawab${k?`, <b class="rx">${k} soal belum dijawab</b>`:""}${f?`, ${f} soal ditandai ragu-ragu`:""}. Setelah selesai, jawaban tidak bisa diubah.</p><div class="acts"><button class="btn" onclick="closeM()">Kembali</button><button class="btn pri" onclick="closeM();finish('Selesai')">Ya, selesaikan</button></div>`)}
 function violation(){S.warn++;save();if(S.warn>=CFG.maxLanggar){closeM();return finish("Pelanggaran aturan")}modal(`<h2>Peringatan ${S.warn} dari ${CFG.maxLanggar}</h2><p>Kamu meninggalkan halaman ujian. Tetap di halaman ini sampai selesai. Pelanggaran ke-${CFG.maxLanggar} mengakhiri ujian.</p><div class="acts"><button class="btn pri" onclick="closeM();try{document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}">Lanjut mengerjakan</button></div>`)}
 document.addEventListener("visibilitychange",()=>{if(live&&document.hidden)violation()});
-["contextmenu","copy","cut","paste"].forEach(ev=>document.addEventListener(ev,e=>{if(live)e.preventDefault()}));
+["contextmenu","copy","cut","paste","dragstart","drop","selectstart"].forEach(ev=>document.addEventListener(ev,e=>{if(live&&!(ev=="selectstart"&&e.target.tagName=="INPUT")){e.preventDefault();e.stopPropagation()}},true));
+document.addEventListener("mousedown",e=>{if(live&&e.button==2){e.preventDefault();e.stopPropagation()}},true);
+addEventListener("keydown",e=>{if(!live)return;const c=e.ctrlKey||e.metaKey,k=e.code,sh=e.shiftKey;
+if(k=="F12"||k=="PrintScreen"||(c&&["KeyC","KeyV","KeyX","KeyA","KeyU","KeyS","KeyP","KeyF","Insert"].includes(k))||(c&&sh&&["KeyI","KeyJ","KeyC","KeyK"].includes(k))||(e.metaKey&&e.altKey&&["KeyI","KeyJ","KeyC","KeyU"].includes(k))||(sh&&k=="Insert")){e.preventDefault();e.stopPropagation()}},true);
+addEventListener("keyup",e=>{if(live&&e.code=="PrintScreen"){try{navigator.clipboard.writeText("").catch(()=>{})}catch(x){}}});
 addEventListener("beforeunload",e=>{if(live){e.preventDefault();e.returnValue=""}});
 addEventListener("keydown",e=>{if(!live||e.target.tagName=="INPUT"||$("#md")||$("#fsm"))return;if(e.key=="ArrowRight")go(1);else if(e.key=="ArrowLeft")go(-1);else if(e.key=="f")flag();else if(/^[1-9]$/.test(e.key)){const q=S.qs[S.i];if(q.tipe=="pg"||q.tipe=="pgk"){const i=+e.key-1;if(i<q.opsi.length)pick(i)}}});
 
@@ -240,7 +245,7 @@ $("#bf").onclick=()=>reqFs().then(unlock).catch(()=>{FSOK=false;unlock()})}
 document.addEventListener("fullscreenchange",()=>{if(live)document.fullscreenElement?unlock():fsLock()});
 
 /* ---------- HASIL ---------- */
-function finish(why){if(S.done)return;live=false;clearInterval(tm);closeM();unlock();try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}
+function finish(why){if(S.done)return;live=false;document.body.classList.remove("ex");clearInterval(tm);closeM();unlock();try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}
 const cat={};let b=0,n=0;S.qs.forEach((q,i)=>{const a=S.a[i],d=done(q,a),o=ok(q,a),k=q.kat||"Umum";cat[k]=cat[k]||{b:0,t:0};cat[k].t++;if(d)n++;if(o){b++;cat[k].b++}});
 S.done=true;S.res={b,n,t:S.qs.length,cat,why,used:Math.min(S.dur*60,(Date.now()-S.start)/1000),at:Date.now()};save();result()}
 function result(){live=false;const r=S.res,sc=Math.round(r.b/r.t*100),kt=Math.round(r.n/r.t*100),ak=r.n?Math.round(r.b/r.n*100):0;
