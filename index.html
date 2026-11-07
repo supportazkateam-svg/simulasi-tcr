@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="id"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TCR Simulasi – Babak Penyisihan</title>
+<title>TCR Simulasi – Babak Penyisihan (Copy)</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#eef2fb;--card:#fff;--ink:#0e1a38;--mut:#5a6785;--line:#d9e0f0;--pri:#2450f0;--onpri:#fff;--acc:#ffb800;--ok:#0b9b62;--bad:#df3f4a;--soft:#e8edfd;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -73,7 +73,7 @@ ul.rules{padding-left:20px;margin:10px 0 18px}ul.rules li{margin:7px 0}
 .bs button{font:700 14px inherit;padding:7px 14px;border-radius:8px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
 .bs button.on{border-color:var(--pri);background:var(--pri);color:var(--onpri)}
 .acts{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
-.nav{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:10px 0}
+.nav{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:6px;margin:10px 0}
 .nav button{font:700 14px 'Nunito Sans',sans-serif;aspect-ratio:1;border-radius:8px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;position:relative}
 .nav button.ans{background:var(--soft);border-color:var(--pri)}
 .nav button.cur{background:var(--pri);color:var(--onpri);border-color:var(--pri)}
@@ -95,9 +95,22 @@ details{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:10p
 summary{cursor:pointer;font-weight:700}
 .rv{color:var(--ok)}.rx{color:var(--bad)}
 textarea.in{min-height:240px;font:13px ui-monospace,monospace}
+html{-webkit-text-size-adjust:100%}button{touch-action:manipulation}
+.logo{min-width:0;white-space:nowrap}.lt{overflow:hidden;text-overflow:ellipsis}.sub{font-weight:600}.lg{flex:none}
+@media(max-width:560px){
+.top{padding:8px 12px;gap:8px}.logo{font-size:18px;gap:7px}.lg{height:30px}.sub{display:none}.top .btn{padding:7px 12px;font-size:14px}
+.wrap{padding:12px 12px 48px}.card{padding:16px}.box{padding:18px}.hero h1{font-size:34px}
+.hud{gap:8px}.hud .sp{display:none}.hud .who{flex:1;min-width:0}.hud .timer{order:2;font-size:26px;min-width:86px;padding:2px 10px}.hud #cnt{order:3;flex:1 1 100%;font-size:16px!important}
+.qt{font-size:17px}.stim{padding:12px}.opt{padding:11px 12px}
+.bs{flex-direction:column;align-items:stretch}.bs div{flex:none}.bs button{flex:1;padding:10px}
+.acts .btn{flex:1 1 auto;padding:11px 10px}
+.stim table{font-size:13px}.stim th,.stim td{padding:5px 6px}
+.ring{width:140px;height:140px}.ring div{width:110px;height:110px;font-size:40px}.cd{font-size:96px}
+textarea.in{font-size:16px}
+}
 @media print{.top,.noprint{display:none!important}body::before{display:none}}
 </style></head><body>
-<header class="top"><div class="logo fd"><img class="lg" src="logo-tcr.png" alt="" onerror="this.style.display='none'">The Champion Race <span class="mut" style="font-weight:600">Simulasi</span></div><div class="sp"></div><button class="btn noprint" id="th" aria-label="Ganti tema">Tema</button></header>
+<header class="top"><div class="logo fd"><img class="lg" src="logo-tcr.png" alt="" onerror="this.style.display='none'"><span class="lt">The Champion Race</span><span class="mut sub">Simulasi</span></div><div class="sp"></div><button class="btn noprint" id="th" aria-label="Ganti tema">Tema</button></header>
 <main class="wrap" id="app"></main>
 <script>
 const CFG={durasi:{SD:45,SMP:50,SMA:60},acak:false,maxLanggar:3,pin:"admin123",key:"tcr_sim_v2",bank:"tcr_bank_v2"};
