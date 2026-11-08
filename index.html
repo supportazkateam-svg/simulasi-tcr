@@ -64,6 +64,7 @@ ul.rules{padding-left:20px;margin:10px 0 18px}ul.rules li{margin:7px 0}
 .stim{background:var(--soft);border-left:5px solid var(--pri);padding:14px 16px;border-radius:8px;margin-bottom:14px;max-width:72ch}
 .stim{overflow-x:auto}.stim p{margin:0 0 10px}.stim p:last-child{margin-bottom:0}.stim table{border-collapse:collapse;width:100%;font-size:15px;margin:8px 0}.stim th,.stim td{border:1px solid var(--line);padding:6px 10px;text-align:left}.stim th{background:var(--card)}.stim pre{white-space:pre-wrap;font:13.5px/1.5 ui-monospace,monospace;margin:6px 0 0;background:var(--card);padding:10px 12px;border-radius:8px}
 .stim ol,.stim ul{margin:6px 0;padding-left:22px}.sbts{display:grid;gap:8px;margin:16px 0}.sbt{display:flex;align-items:center;gap:12px;padding:10px 14px;border:2px solid var(--line);border-radius:12px}.sbt b{width:32px;height:32px;border-radius:8px;background:var(--soft);display:grid;place-items:center;font:700 18px Rajdhani,sans-serif;flex:none}.sbt div{flex:1;min-width:0}.sbt small{display:block;color:var(--mut)}.sbt em{font-style:normal;font-weight:700;font-size:14px}.sbt.cu{border-color:var(--pri);background:var(--soft)}.sbt.dn em{color:var(--ok)}.sbt.lk{opacity:.55}
+.bkw{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:8px 0 16px}.bkw b{font-size:44px;line-height:1;color:var(--pri);min-width:2ch;text-align:center}
 .qt{font-size:19px;font-weight:700;margin-bottom:14px;max-width:72ch}
 .qi{max-width:100%;border-radius:8px;margin-bottom:12px}
 .opt{display:flex;gap:12px;align-items:center;width:100%;text-align:left;font:inherit;padding:12px 14px;margin:8px 0;border:2px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);cursor:pointer}
@@ -115,7 +116,7 @@ textarea.in{font-size:16px}
 <header class="top"><div class="logo fd"><img class="lg" src="logo-tcr.png" alt="" onerror="this.style.display='none'"><span class="lt">The Champion Race</span><span class="mut sub">Simulasi</span></div><div class="sp"></div><button class="btn noprint" id="th" aria-label="Ganti tema">Tema</button></header>
 <main class="wrap" id="app"></main>
 <script>
-const CFG={subtes:[{id:"bind",nama:"Bahasa Indonesia",dur:{SD:45,SMP:45,SMA:45}},{id:"mat",nama:"Matematika",dur:{SD:60,SMP:60,SMA:60}}],acak:false,maxLanggar:3,pin:"admin123",key:"tcr_sim_v3",bank:"tcr_bank_v3"};
+const CFG={subtes:[{id:"bind",nama:"Bahasa Indonesia",dur:{SD:30,SMP:30,SMA:30}},{id:"mat",nama:"Matematika",dur:{SD:30,SMP:30,SMA:30}}],acak:false,jeda:30,maxLanggar:3,pin:"admin123",key:"tcr_sim_v3",bank:"tcr_bank_v3"};
 const GAMBUT=`<p><b>Paragraf 1</b><br>Lahan gambut tropis di Indonesia memegang peranan krusial dalam menjaga keseimbangan iklim global karena fungsinya sebagai salah satu penyimpan karbon terestrial raksasa di bumi. Meskipun hanya mencakup sekitar tiga persen dari total luas daratan dunia, lahan gambut mampu mengikat volume karbon dua kali lebih banyak daripada yang tersimpan di seluruh vegetasi hutan daratan bumi. Keberadaan air yang melimpah dalam ekosistem gambut alami menciptakan kondisi anaerobik yang melambatkan proses pembusukan sisa-sisa tumbuhan, sehingga akumulasi bahan organik dapat bertahan hingga ribuan tahun tanpa terurai menjadi gas emisi.</p>
 <p><b>Paragraf 2</b><br>Namun, dalam beberapa dekade terakhir, konversi lahan gambut secara tidak terkendali memicu degradasi ekosistem perairan dan daratan secara luas. Pembuatan saluran drainase buatan atau kanalisasi menyebabkan permukaan gambut menyusut, memicu proses mikroba pengurai bekerja secara masif, dan mengubah fungsi gambut dari penyerap karbon (<i>carbon sink</i>) menjadi pelepas emisi karbon (<i>carbon source</i>). Saat musim kemarau tiba, gambut yang mengering menjadi sangat rentan terbakar hingga ke lapisan dalam, menghasilkan kabut asap beracun yang melintasi batas negara dan melepaskan emisi gas rumah kaca dalam jumlah yang sangat mengkhawatirkan.</p>
 <p><b>Paragraf 3</b><br>Guna menanggulangi kerentanan tersebut, pemerintah bersama lembaga lingkungan menggalakkan strategi restorasi ekosistem gambut secara terpadu melalui pendekatan 3R, yaitu <i>Rewetting</i> (pembasahan kembali), <i>Revegetation</i> (penanaman kembali), dan <i>Revitalisation</i> (pemulihan mata pencaharian masyarakat). Pembasahan dilakukan dengan membangun sekat kanal (<i>canal blocking</i>) untuk menaikkan kembali tinggi muka air tanah. Penanaman kembali menggunakan spesies lokal seperti jelutung rawa dan belangeran yang tahan genangan. Sementara itu, pemulihan ekonomi masyarakat diarahkan pada budi daya perikanan darat dan komoditas non-kayu agar warga desa tidak lagi bergantung pada pembalakan liar atau pembukaan lahan dengan cara membakar.</p>
@@ -181,7 +182,7 @@ let BANK=DEF;try{const b=JSON.parse(localStorage.getItem(CFG.bank)||"null");if(A
 const $=s=>document.querySelector(s),app=$("#app"),L=i=>String.fromCharCode(65+i);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const mmss=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
-let S=null,tm=null,live=false;
+let S=null,tm=null,bk=null,live=false;
 const save=()=>{try{localStorage.setItem(CFG.key,JSON.stringify(S))}catch(e){}};
 const load=()=>{try{return JSON.parse(localStorage.getItem(CFG.key)||"null")}catch(e){return null}};
 function modal(h){let m=$("#md");if(!m){m=document.createElement("div");m.id="md";m.className="md";document.body.appendChild(m)}m.innerHTML=`<div class="box" role="dialog">${h}</div>`}
@@ -196,7 +197,7 @@ const kfmt=q=>q.tipe=="pg"?L(q.kunci)+". "+q.opsi[q.kunci]:q.tipe=="pgk"?q.kunci
 /* ---------- LOGIN ---------- */
 function setSub(){const p=S.plan[S.n];S.qs=p.qs;S.dur=p.dur;S.a={};S.f={};S.i=0;S.start=0;S.end=0}
 function resume(){S=load();if(S.start&&S.end<=Date.now())finish("Waktu habis");else if(S.start)exam();else lobby()}
-function login(){clearInterval(tm);live=false;document.body.classList.remove("ex");unlock();const old=load();
+function login(){clearInterval(tm);clearInterval(bk);live=false;document.body.classList.remove("ex");unlock();const old=load();
 const rb=old&&!old.done?`<div class="card" style="margin-bottom:14px;border-color:var(--pri)"><b>Ujian ${esc(old.u.nama)} belum selesai (subtes ${old.n+1}: ${esc(old.plan[old.n].nama)}).</b><div class="acts"><button class="btn pri" onclick="resume()">Lanjutkan ujian</button></div></div>`:old&&old.done?`<div class="card" style="margin-bottom:14px"><b>Hasil terakhir: ${esc(old.u.nama)}</b><div class="acts"><button class="btn" onclick="S=load();result()">Lihat hasil</button></div></div>`:"";
 app.innerHTML=`${rb}<div class="hero"><div><h1>Siap balapan<br>otak di lintasan?</h1><p class="mut" style="max-width:44ch">Simulasi babak penyisihan The Champion Race: dua subtes berurutan, Bahasa Indonesia lalu Matematika, dikerjakan melawan waktu.</p></div>
 <form class="card" id="f" autocomplete="off"><h2>Daftar peserta</h2>
@@ -216,16 +217,17 @@ if(!plan.length)return $("#er").textContent="Belum ada soal untuk jenjang "+jenj
 S={u:{nama,jenjang,sekolah},plan,n:0,hist:[],warn:0,done:false};setSub();save();lobby()}}
 
 /* ---------- LOBI SUBTES ---------- */
-function lobby(){live=false;const first=!S.hist.length,cur=S.plan[S.n];
+function lobby(){live=false;clearInterval(bk);const first=!S.hist.length,cur=S.plan[S.n],brk=!first&&S.brk>0;
 app.innerHTML=`<div class="card" style="max-width:680px;margin:0 auto"><h1 style="font-size:36px">${first?"Halo, "+esc(S.u.nama):"Subtes selesai"}</h1><p class="mut" style="margin:4px 0">${esc(S.u.sekolah)} · Jenjang ${S.u.jenjang}</p>
 <div class="sbts">${S.plan.map((p,i)=>{const d=i<S.hist.length;return `<div class="sbt ${d?"dn":i==S.n?"cu":"lk"}"><b>${i+1}</b><div><span class="fd" style="font-size:20px">${p.nama}</span><small>${p.qs.length} soal · ${p.dur} menit</small></div><em>${d?"Selesai":i==S.n?"Berikutnya":"Terkunci"}</em></div>`}).join("")}</div>
-${first?`<h2>Aturan lomba</h2><ul class="rules"><li>Subtes dikerjakan berurutan. Subtes berikutnya terbuka setelah subtes sebelumnya diselesaikan, dan subtes yang sudah selesai tidak bisa dibuka lagi.</li><li>Waktu tiap subtes berjalan sejak tombol mulai ditekan dan tidak bisa dijeda.</li><li>Jawaban tersimpan otomatis. Dalam satu subtes kamu bisa kembali ke soal mana pun dan menandainya ragu-ragu.</li><li>Jangan pindah tab atau keluar dari layar penuh. Pelanggaran ke-${CFG.maxLanggar} mengakhiri seluruh ujian otomatis.</li><li>Jika keluar dari layar penuh, layar ujian terkunci sampai kamu kembali ke layar penuh.</li></ul>`:`<p class="mut">Ambil napas sebentar. Waktu subtes berikutnya baru berjalan setelah kamu menekan tombol mulai.</p>`}
+${first?`<h2>Aturan lomba</h2><ul class="rules"><li>Subtes dikerjakan berurutan. Subtes berikutnya terbuka setelah subtes sebelumnya diselesaikan, dan subtes yang sudah selesai tidak bisa dibuka lagi.</li><li>Waktu tiap subtes berjalan sejak tombol mulai ditekan dan tidak bisa dijeda.</li><li>Antarsubtes ada jeda ${CFG.jeda} detik, lalu subtes berikutnya dimulai otomatis.</li><li>Jawaban tersimpan otomatis. Dalam satu subtes kamu bisa kembali ke soal mana pun dan menandainya ragu-ragu.</li><li>Jangan pindah tab atau keluar dari layar penuh. Pelanggaran ke-${CFG.maxLanggar} mengakhiri seluruh ujian otomatis.</li><li>Jika keluar dari layar penuh, layar ujian terkunci sampai kamu kembali ke layar penuh.</li></ul>`:`<div class="bkw"><span class="mut">Subtes berikutnya dimulai otomatis dalam</span><b class="fd" id="bk">${CFG.jeda}</b><span class="mut">detik</span></div>`}
 <button class="btn pri big" id="go">Mulai Subtes ${S.n+1}: ${cur.nama}</button>${first?`<div class="acts"><button class="btn" onclick="login()">Ubah data</button></div>`:""}</div>`;
-$("#go").onclick=()=>{try{document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}let n=3;const t=()=>{if(!n){modal('<div class="cd">GO!</div>');return setTimeout(()=>{closeM();S.start=Date.now();S.end=S.start+S.dur*60000;save();exam()},600)}modal(`<div class="cd">${n}</div>`);n--;setTimeout(t,800)};t()}}
+$("#go").onclick=()=>{clearInterval(bk);try{document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}let n=3;const t=()=>{if(!n){modal('<div class="cd">GO!</div>');return setTimeout(()=>{closeM();S.start=Date.now();S.end=S.start+S.dur*60000;save();exam()},600)}modal(`<div class="cd">${n}</div>`);n--;setTimeout(t,800)};t()};
+if(brk){const upd=()=>{const l=Math.ceil((S.brk-Date.now())/1000),e=$("#bk");if(!e)return clearInterval(bk);if(l<=0){clearInterval(bk);S.start=Date.now();S.end=S.start+S.dur*60000;save();return exam()}e.textContent=l};bk=setInterval(upd,250);upd()}}
 
 /* ---------- UJIAN ---------- */
 
-function exam(){live=true;document.body.classList.add("ex");
+function exam(){live=true;clearInterval(bk);S.brk=0;document.body.classList.add("ex");
 app.innerHTML=`<div class="card"><div class="hud"><div class="who">${esc(S.u.nama)}<small>Subtes ${S.n+1}/${S.plan.length} · ${S.plan[S.n].nama}</small></div><div class="sp"></div><div class="fd" id="cnt" style="font-size:20px"></div><div class="timer" id="tm">--:--</div></div>
 </div>
 <div class="main" style="margin-top:16px"><div class="card" id="qbox"></div><div class="card"><b class="fd" style="font-size:20px">Navigasi soal</b><div class="nav" id="nav"></div><div class="leg">Biru: terjawab · Titik kuning: ragu-ragu</div><div class="acts"><button class="btn pri" style="width:100%" id="fin">${S.n<S.plan.length-1?"Selesaikan subtes":"Selesaikan ujian"}</button></div></div></div>`;
@@ -269,10 +271,11 @@ $("#bf").onclick=()=>reqFs().then(unlock).catch(()=>{FSOK=false;unlock()})}
 document.addEventListener("fullscreenchange",()=>{if(live)document.fullscreenElement?unlock():fsLock()});
 
 /* ---------- HASIL ---------- */
-function finish(why,all){if(S.done)return;live=false;document.body.classList.remove("ex");clearInterval(tm);closeM();unlock();try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}
+function finish(why,all){if(S.done)return;live=false;document.body.classList.remove("ex");clearInterval(tm);closeM();unlock();
 const p=S.plan[S.n];S.hist.push({id:p.id,nama:p.nama,dur:S.dur,qs:S.qs,a:S.a,res:grade(S.qs,S.a),used:Math.min(S.dur*60,(Date.now()-S.start)/1000),why});
 if(all)for(let k=S.n+1;k<S.plan.length;k++){const x=S.plan[k];S.hist.push({id:x.id,nama:x.nama,dur:x.dur,qs:x.qs,a:{},res:grade(x.qs,{}),used:0,why:"Tidak dikerjakan"})}
-if(!all&&S.n<S.plan.length-1){S.n++;setSub();save();return lobby()}
+if(!all&&S.n<S.plan.length-1){S.n++;setSub();S.brk=Date.now()+CFG.jeda*1000;save();return lobby()}
+try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}
 S.done=true;save();result()}
 const grade=(qs,a)=>{let b=0,n=0;qs.forEach((q,i)=>{if(done(q,a[i]))n++;if(ok(q,a[i]))b++});return{b,n,t:qs.length}};
 const rev=h=>h.qs.map((q,i)=>{const a=h.a[i],o=ok(q,a);return `<details><summary><span class="${o?"rv":"rx"}">${o?"Benar":done(q,a)?"Salah":"Kosong"}</span> · Soal ${i+1}</summary>${q.stimulus?`<div class="stim" style="margin-top:10px">${q.stimulus}</div>`:""}<p><b>${q.q}</b></p><p>Jawabanmu: ${fmt(q,a)}<br>Kunci: <b>${kfmt(q)}</b></p>${q.bahas?`<p class="mut">${q.bahas}</p>`:""}</details>`}).join("");
