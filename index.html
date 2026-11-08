@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="id"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07070a">
 <title>TCR Simulasi – Babak Penyisihan</title>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#eef2fb;--card:#fff;--ink:#0e1a38;--mut:#5a6785;--line:#d9e0f0;--pri:#2450f0;--onpri:#fff;--acc:#ffb800;--ok:#0b9b62;--bad:#df3f4a;--soft:#e8edfd;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1127;--card:#111b38;--ink:#e9efff;--mut:#98a5c8;--line:#24325b;--pri:#6b8dff;--onpri:#06102e;--soft:#1a2750;--ok:#34d399;--bad:#ff6b75;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0a1127;--card:#111b38;--ink:#e9efff;--mut:#98a5c8;--line:#24325b;--pri:#6b8dff;--onpri:#06102e;--soft:#1a2750;--ok:#34d399;--bad:#ff6b75;color-scheme:dark}
+:root{--bg:#07070a;--card:#12121a;--ink:#f4f4f8;--mut:#9d9db2;--line:#2a2a38;--pri:#ff1a2e;--onpri:#fff;--acc:#ffb800;--gx:#ffb800;--ok:#34d399;--bad:#ff4d5e;--soft:#241219;--gl:.16;--gg:.07;--grid:rgba(255,255,255,.035);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="light"]{--bg:#f6f3f4;--card:#fff;--ink:#16101a;--mut:#6b6270;--line:#e3dadf;--pri:#d90f24;--soft:#fdecee;--gx:#8a5a00;--ok:#0b9b62;--bad:#c8102e;--gl:.10;--gg:.10;--grid:rgba(20,10,20,.045);color-scheme:light}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Nunito Sans',system-ui,sans-serif;min-height:100vh}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Space Grotesk',system-ui,sans-serif;min-height:100vh}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--card);z-index:10}
-h1,h2,h3,.fd{font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;letter-spacing:.01em;margin:0}
+h1,h2,h3,.fd{font-family:'Orbitron','Segoe UI',system-ui,sans-serif;letter-spacing:.01em;margin:0}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--card);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:10px 16px}
 .logo{font-size:22px;font-weight:700;display:flex;align-items:center;gap:8px}
 .lg{height:34px;width:auto;border-radius:6px}
 .sp{flex:1}
 .wrap{max-width:1040px;margin:0 auto;padding:18px 16px 60px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
-.btn{font:700 15px 'Nunito Sans',sans-serif;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:10px 16px;cursor:pointer}
+.btn{font:700 15px 'Space Grotesk',sans-serif;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:10px 16px;cursor:pointer}
 .btn:hover{border-color:var(--pri)}
 .btn.pri{background:var(--pri);color:var(--onpri);border-color:var(--pri)}
 .btn.big{font-size:18px;padding:14px 26px;width:100%}
@@ -44,7 +44,7 @@ ul.rules{padding-left:20px;margin:10px 0 18px}ul.rules li{margin:7px 0}
 /* exam */
 .hud{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .who{font-weight:700}.who small{display:block;color:var(--mut);font-weight:400}
-.timer{font:700 30px 'Rajdhani',sans-serif;background:var(--soft);padding:2px 14px;border-radius:10px;min-width:104px;text-align:center}
+.timer{font:700 30px 'Orbitron',sans-serif;background:var(--soft);padding:2px 14px;border-radius:10px;min-width:104px;text-align:center}
 .timer.low{background:var(--bad);color:#fff;animation:bl 1s steps(2) infinite}
 @keyframes bl{50%{opacity:.6}}
 @media(prefers-reduced-motion:reduce){.timer.low{animation:none}}
@@ -63,16 +63,16 @@ ul.rules{padding-left:20px;margin:10px 0 18px}ul.rules li{margin:7px 0}
 .tag.w{background:var(--acc);color:#2a1d00}
 .stim{background:var(--soft);border-left:5px solid var(--pri);padding:14px 16px;border-radius:8px;margin-bottom:14px;max-width:72ch}
 .stim{overflow-x:auto}.stim p{margin:0 0 10px}.stim p:last-child{margin-bottom:0}.stim table{border-collapse:collapse;width:100%;font-size:15px;margin:8px 0}.stim th,.stim td{border:1px solid var(--line);padding:6px 10px;text-align:left}.stim th{background:var(--card)}.stim pre{white-space:pre-wrap;font:13.5px/1.5 ui-monospace,monospace;margin:6px 0 0;background:var(--card);padding:10px 12px;border-radius:8px}
-.stim ol,.stim ul{margin:6px 0;padding-left:22px}.sbts{display:grid;gap:8px;margin:16px 0}.sbt{display:flex;align-items:center;gap:12px;padding:10px 14px;border:2px solid var(--line);border-radius:12px}.sbt b{width:32px;height:32px;border-radius:8px;background:var(--soft);display:grid;place-items:center;font:700 18px Rajdhani,sans-serif;flex:none}.sbt div{flex:1;min-width:0}.sbt small{display:block;color:var(--mut)}.sbt em{font-style:normal;font-weight:700;font-size:14px}.sbt.cu{border-color:var(--pri);background:var(--soft)}.sbt.dn em{color:var(--ok)}.sbt.lk{opacity:.55}
+.stim ol,.stim ul{margin:6px 0;padding-left:22px}.sbts{display:grid;gap:8px;margin:16px 0}.sbt{display:flex;align-items:center;gap:12px;padding:10px 14px;border:2px solid var(--line);border-radius:12px}.sbt b{width:32px;height:32px;border-radius:8px;background:var(--soft);display:grid;place-items:center;font:700 18px Orbitron,sans-serif;flex:none}.sbt div{flex:1;min-width:0}.sbt small{display:block;color:var(--mut)}.sbt em{font-style:normal;font-weight:700;font-size:14px}.sbt.cu{border-color:var(--pri);background:var(--soft)}.sbt.dn em{color:var(--ok)}.sbt.lk{opacity:.55}
 .bkw{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:8px 0 16px}.bkw b{font-size:44px;line-height:1;color:var(--pri);min-width:2ch;text-align:center}
-.slg{display:inline-block;font:700 20px Rajdhani,sans-serif;letter-spacing:.14em;background:var(--acc);color:#2a1d00;padding:3px 14px;border-radius:8px;transform:skew(-6deg)}
+.slg{display:inline-block;font:700 20px Orbitron,sans-serif;letter-spacing:.14em;background:var(--acc);color:#2a1d00;padding:3px 14px;border-radius:8px;transform:skew(-6deg)}
 .pledge{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--bg);cursor:pointer;margin:0 0 14px;font-weight:600}.pledge input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--pri)}
 .qi{display:block;margin:10px auto;height:auto;background:#fff;padding:6px;border-radius:8px}
 .stars{color:var(--acc);font-size:18px;letter-spacing:1px;white-space:nowrap;line-height:1}.stars i{font-style:normal;color:var(--line)}
 .qt{font-size:19px;font-weight:700;margin-bottom:14px;max-width:72ch}
 .qi{max-width:100%;border-radius:8px;margin-bottom:12px}
 .opt{display:flex;gap:12px;align-items:center;width:100%;text-align:left;font:inherit;padding:12px 14px;margin:8px 0;border:2px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);cursor:pointer}
-.opt b{flex:none;width:32px;height:32px;border-radius:8px;background:var(--soft);display:grid;place-items:center;font-family:Rajdhani,sans-serif;font-size:18px}
+.opt b{flex:none;width:32px;height:32px;border-radius:8px;background:var(--soft);display:grid;place-items:center;font-family:Orbitron,sans-serif;font-size:18px}
 .opt.on{border-color:var(--pri);background:var(--soft)}.opt.on b{background:var(--pri);color:var(--onpri)}
 .bs{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
 .bs div{display:flex;gap:6px;flex:none}
@@ -80,7 +80,7 @@ ul.rules{padding-left:20px;margin:10px 0 18px}ul.rules li{margin:7px 0}
 .bs button.on{border-color:var(--pri);background:var(--pri);color:var(--onpri)}
 .acts{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
 .nav{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:6px;margin:10px 0}
-.nav button{font:700 14px 'Nunito Sans',sans-serif;aspect-ratio:1;border-radius:8px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;position:relative}
+.nav button{font:700 14px 'Space Grotesk',sans-serif;aspect-ratio:1;border-radius:8px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;position:relative}
 .nav button.ans{background:var(--soft);border-color:var(--pri)}
 .nav button.cur{background:var(--pri);color:var(--onpri);border-color:var(--pri)}
 .nav button.fl::after{content:"";position:absolute;top:3px;right:3px;width:9px;height:9px;border-radius:50%;background:var(--acc)}
@@ -89,13 +89,13 @@ ul.rules{padding-left:20px;margin:10px 0 18px}ul.rules li{margin:7px 0}
 .md{position:fixed;inset:0;background:rgba(5,10,30,.65);z-index:50;display:grid;place-items:center;padding:16px}
 .box{background:var(--card);border-radius:16px;padding:24px;max-width:460px;width:100%;max-height:86vh;overflow:auto}
 .box h2{margin-bottom:8px}
-.cd{font:700 120px/1 'Rajdhani',sans-serif;text-align:center;color:var(--pri)}
+.cd{font:700 120px/1 'Orbitron',sans-serif;text-align:center;color:var(--pri)}
 .md.fs{background:var(--bg);z-index:70}
 /* result */
 .ring{--p:0;width:170px;height:170px;border-radius:50%;background:conic-gradient(var(--pri) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center;flex:none}
-.ring div{width:134px;height:134px;border-radius:50%;background:var(--card);display:grid;place-items:center;font:700 48px Rajdhani,sans-serif}
+.ring div{width:134px;height:134px;border-radius:50%;background:var(--card);display:grid;place-items:center;font:700 48px Orbitron,sans-serif}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:16px 0}
-.stat{background:var(--soft);border-radius:10px;padding:10px 14px}.stat b{display:block;font:700 26px Rajdhani,sans-serif}
+.stat{background:var(--soft);border-radius:10px;padding:10px 14px}.stat b{display:block;font:700 26px Orbitron,sans-serif}
 .bar{height:10px;border-radius:5px;background:var(--line);overflow:hidden;margin:4px 0 12px}.bar i{display:block;height:100%;background:var(--pri)}
 details{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:10px 14px;background:var(--bg)}
 summary{cursor:pointer;font-weight:700}
@@ -115,6 +115,31 @@ body.ex{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}bod
 .ring{width:140px;height:140px}.ring div{width:110px;height:110px;font-size:40px}.cd{font-size:96px}
 textarea.in{font-size:16px}
 }
+/* TEMA RESMI TCR: merah-emas gelap, Orbitron + Space Grotesk */
+body{background:radial-gradient(900px 500px at 12% -8%,rgba(255,26,46,var(--gl)),transparent 60%),radial-gradient(700px 420px at 95% 8%,rgba(255,184,0,var(--gg)),transparent 60%),var(--bg)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:44px 44px}
+.wrap{position:relative;z-index:1}
+.top::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,var(--pri),var(--acc) 55%,transparent)}
+.logo{font-size:15px;text-transform:uppercase;letter-spacing:.06em}.logo .sub{font-size:11px}
+.hero h1{font-size:clamp(26px,5vw,44px);line-height:1.08;text-transform:uppercase;font-weight:900;font-style:italic}
+.gt{font-style:normal;background:linear-gradient(90deg,var(--ink),var(--pri) 55%,var(--acc));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:18px;letter-spacing:.04em;text-transform:uppercase}h3.fd{font-size:18px!important}
+.card h1{font-size:clamp(20px,4.2vw,28px)!important;line-height:1.2;text-transform:uppercase}
+.card{border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.22)}
+.btn.pri{font-family:'Orbitron',sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.08em;box-shadow:0 4px 16px rgba(255,26,46,.35)}.btn.pri:hover{filter:brightness(1.1)}
+.btn.big{font-size:14px;padding:15px 22px}
+.timer{font-size:22px;border:1px solid var(--line);min-width:96px;color:var(--gx)}.timer.low{color:#fff}
+b.fd{font-size:14px!important}.sbt .fd{font-size:15px!important}#cnt{font-size:14px!important;color:var(--gx)}
+.opt b,.sbt b{font-size:15px}.stat b{font-size:20px}.stat{border:1px solid var(--line)}
+.ring div{font-size:36px}
+.cd{font-size:96px;text-shadow:0 0 30px rgba(255,26,46,.5)}
+.slg{font-size:15px;color:#1a1200;letter-spacing:.12em}
+.bkw b{font-size:34px}
+.opt.on{box-shadow:0 0 0 1px var(--pri) inset}
+.nav button.cur{box-shadow:0 0 12px rgba(255,26,46,.45)}
+.md{backdrop-filter:blur(4px)}
+.bar i{background:linear-gradient(90deg,var(--pri),var(--acc))}
+@media(max-width:560px){.logo{font-size:12px}.hero h1{font-size:24px}.timer{font-size:19px;min-width:80px}#cnt{font-size:12px!important}.ring div{font-size:30px}.cd{font-size:72px}.sbt .fd{font-size:13px!important}.btn.big{font-size:13px}}
 @media print{.top,.noprint{display:none!important}body::before{display:none}}
 </style></head><body>
 <header class="top"><div class="logo fd"><img class="lg" src="logo-tcr.png" alt="" onerror="this.style.display='none'"><span class="lt">The Champion Race</span><span class="mut sub">Simulasi</span></div><div class="sp"></div><button class="btn noprint" id="th" aria-label="Ganti tema">Tema</button></header>
@@ -192,7 +217,7 @@ const save=()=>{try{localStorage.setItem(CFG.key,JSON.stringify(S))}catch(e){}};
 const load=()=>{try{return JSON.parse(localStorage.getItem(CFG.key)||"null")}catch(e){return null}};
 function modal(h){let m=$("#md");if(!m){m=document.createElement("div");m.id="md";m.className="md";document.body.appendChild(m)}m.innerHTML=`<div class="box" role="dialog">${h}</div>`}
 const closeM=()=>{const m=$("#md");m&&m.remove()};
-$("#th").onclick=()=>{const r=document.documentElement,d=r.dataset.theme?r.dataset.theme=="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=d?"light":"dark"};
+$("#th").onclick=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme=="light"?"dark":"light"};
 const lv=q=>Math.min(5,Math.max(1,Math.round(q.level)||1)),wt=q=>CFG.bobot[lv(q)-1];
 const stars=q=>`<span class="stars" role="img" aria-label="Kesulitan ${lv(q)} dari 5, bobot ${wt(q)} poin">${"★".repeat(lv(q))}<i>${"★".repeat(5-lv(q))}</i></span><span class="mut">${wt(q)} poin</span>`;
 const done=(q,a)=>a==null?false:q.tipe=="pg"?true:q.tipe=="pgk"?a.length>0:q.tipe=="bs"?a.length==q.opsi.length&&a.every(x=>x!==null):String(a).trim()!=="";
@@ -206,7 +231,7 @@ function setSub(){const p=S.plan[S.n];S.qs=p.qs;S.dur=p.dur;S.a={};S.f={};S.i=0;
 function resume(){S=load();if(S.start&&S.end<=Date.now())finish("Waktu habis");else if(S.start)exam();else lobby()}
 function login(){clearInterval(tm);clearInterval(bk);live=false;document.body.classList.remove("ex");unlock();const old=load();
 const rb=old&&!old.done?`<div class="card" style="margin-bottom:14px;border-color:var(--pri)"><b>Ujian ${esc(old.u.nama)} belum selesai (subtes ${old.n+1}: ${esc(old.plan[old.n].nama)}).</b><div class="acts"><button class="btn pri" onclick="resume()">Lanjutkan ujian</button></div></div>`:old&&old.done?`<div class="card" style="margin-bottom:14px"><b>Hasil terakhir: ${esc(old.u.nama)}</b><div class="acts"><button class="btn" onclick="S=load();result()">Lihat hasil</button></div></div>`:"";
-app.innerHTML=`${rb}<div class="hero"><div><h1>Siap balapan<br>otak di lintasan?</h1><p style="margin:0 0 12px"><span class="slg">JUJUR ITU JUARA</span></p><p class="mut" style="max-width:44ch">Simulasi babak penyisihan The Champion Race: dua subtes berurutan, Bahasa Indonesia lalu Matematika, dikerjakan melawan waktu.</p></div>
+app.innerHTML=`${rb}<div class="hero"><div><h1>Siap balapan<br><span class="gt">otak di lintasan?</span></h1><p style="margin:0 0 12px"><span class="slg">JUJUR ITU JUARA</span></p><p class="mut" style="max-width:44ch">Simulasi babak penyisihan The Champion Race: dua subtes berurutan, Bahasa Indonesia lalu Matematika, dikerjakan melawan waktu.</p></div>
 <form class="card" id="f" autocomplete="off"><h2>Daftar peserta</h2>
 <label for="nm">Nama peserta</label><input class="in" id="nm" maxlength="60" placeholder="Nama lengkap">
 <label>Jenjang</label><div class="seg">${["SD","SMP","SMA"].map((j,i)=>`<label><input type="radio" name="jn" value="${j}" ${i?"":"checked"}><span>${j}</span></label>`).join("")}</div>
