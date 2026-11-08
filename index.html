@@ -143,11 +143,14 @@ b.fd{font-size:14px!important}.sbt .fd{font-size:15px!important}#cnt{font-size:1
 /* KURSOR KUSTOM (hanya desktop dengan mouse; dimatikan untuk prefers-reduced-motion) */
 .cglow,.cdot{position:fixed;top:0;left:0;pointer-events:none;opacity:0;transition:opacity .3s}
 .cglow{z-index:90;width:440px;height:440px;margin:-220px 0 0 -220px;border-radius:50%;background:radial-gradient(circle,rgba(255,26,46,.20) 0,rgba(255,26,46,.08) 38%,transparent 70%);transform:translate3d(var(--gx,-999px),var(--gy,-999px),0)}
-.cdot{z-index:100;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--pri);box-shadow:0 0 14px 2px rgba(255,26,46,.65);transform:translate3d(var(--dx,-999px),var(--dy,-999px),0);scale:var(--ds,1);transition:opacity .3s,scale .18s ease}
+.cdot{z-index:100;width:0;height:0;transform:translate3d(var(--dx,-999px),var(--dy,-999px),0)}
+.cdot::before{content:"";position:absolute;left:-7px;top:-7px;width:14px;height:14px;border-radius:50%;background:var(--pri);box-shadow:0 0 14px 2px rgba(255,26,46,.65);scale:var(--ds,1);transition:scale .18s ease}
 html.cc,html.cc *{cursor:none!important}
 html.cc input:not([type=checkbox]):not([type=radio]),html.cc textarea{cursor:text!important}
 html.cc.cv .cglow,html.cc.cv .cdot{opacity:1}
-html.cc.cv body.ex .cglow{opacity:.45}
+html.cc.cv body.ex .cglow{opacity:.75}
+html.cc.cv .cglow{z-index:120}
+html.cc.cv .cdot{z-index:121}
 html.cc.h .cdot{--ds:1.9;opacity:.6}
 html.cc.dn .cdot{--ds:.7}
 html.cc.t .cdot{opacity:0}
@@ -261,7 +264,7 @@ const kfmt=q=>q.tipe=="pg"?L(q.kunci)+". "+q.opsi[q.kunci]:q.tipe=="pgk"?q.kunci
 /* ---------- LOGIN ---------- */
 function setSub(){const p=S.plan[S.n];S.qs=p.qs;S.dur=p.dur;S.a={};S.f={};S.i=0;S.start=0;S.end=0}
 function resume(){S=load();if(S.start&&S.end<=Date.now())finish("Waktu habis");else if(S.start)exam();else lobby()}
-function login(){clearInterval(tm);clearInterval(bk);live=false;document.body.classList.remove("ex");unlock();const old=load();
+function login(){clearInterval(tm);clearInterval(bk);live=false;guardOff();document.body.classList.remove("ex");unlock();const old=load();
 const rb=old&&!old.done?`<div class="card" style="margin-bottom:14px;border-color:var(--pri)"><b>Ujian ${esc(old.u.nama)} belum selesai (subtes ${old.n+1}: ${esc(old.plan[old.n].nama)}).</b><div class="acts"><button class="btn pri" onclick="resume()">Lanjutkan ujian</button></div></div>`:old&&old.done?`<div class="card" style="margin-bottom:14px"><b>Hasil terakhir: ${esc(old.u.nama)}</b><div class="acts"><button class="btn" onclick="S=load();result()">Lihat hasil</button></div></div>`:"";
 app.innerHTML=`${rb}<div class="hero"><div><h1>Siap balapan<br><span class="gt">otak di lintasan?</span></h1><p style="margin:0 0 12px"><span class="slg">JUJUR ITU JUARA</span></p><p class="mut" style="max-width:44ch">Simulasi babak penyisihan The Champion Race: dua subtes berurutan, Bahasa Indonesia lalu Matematika, dikerjakan melawan waktu.</p></div>
 <form class="card" id="f" autocomplete="off"><h2>Daftar peserta</h2>
@@ -292,7 +295,7 @@ if(brk){const upd=()=>{const l=Math.ceil((S.brk-Date.now())/1000),e=$("#bk");if(
 
 /* ---------- UJIAN ---------- */
 
-function exam(){live=true;clearInterval(bk);S.brk=0;document.body.classList.add("ex");
+function exam(){live=true;guardOn();clearInterval(bk);S.brk=0;document.body.classList.add("ex");
 app.innerHTML=`<div class="card"><div class="hud"><div class="who">${esc(S.u.nama)}<small>Subtes ${S.n+1}/${S.plan.length} · ${S.plan[S.n].nama}</small></div><div class="sp"></div><div class="fd" id="cnt" style="font-size:20px"></div><div class="timer" id="tm">--:--</div></div>
 </div>
 <div class="main" style="margin-top:16px"><div class="card" id="qbox"></div><div class="card"><b class="fd" style="font-size:20px">Navigasi soal</b><div class="nav" id="nav"></div><div class="leg">Biru: terjawab · Titik kuning: ragu-ragu</div><div class="acts"><button class="btn pri" style="width:100%" id="fin">${S.n<S.plan.length-1?"Selesaikan subtes":"Selesaikan ujian"}</button></div></div></div>`;
@@ -318,7 +321,10 @@ function confirmFin(){const n=S.qs.filter((q,i)=>done(q,S.a[i])).length,k=S.qs.l
 modal(`<h2>Selesaikan subtes ${S.plan[S.n].nama}?</h2><p>${n} soal terjawab${k?`, <b class="rx">${k} soal belum dijawab</b>`:""}${f?`, ${f} soal ditandai ragu-ragu`:""}. Setelah selesai, jawaban tidak bisa diubah dan kamu tidak bisa kembali ke subtes ini.${S.n<S.plan.length-1?" Subtes berikutnya akan terbuka.":""}</p><div class="acts"><button class="btn" onclick="closeM()">Kembali</button><button class="btn pri" onclick="closeM();finish('Selesai')">Ya, selesaikan</button></div>`)}
 function violation(){S.warn++;save();if(S.warn>=CFG.maxLanggar){closeM();return finish("Pelanggaran aturan",true)}modal(`<h2>Peringatan ${S.warn} dari ${CFG.maxLanggar}</h2><p>Kamu meninggalkan halaman ujian. Tetap di halaman ini sampai selesai. Pelanggaran ke-${CFG.maxLanggar} mengakhiri ujian.</p><div class="acts"><button class="btn pri" onclick="closeM();try{document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}">Lanjut mengerjakan</button></div>`)}
 document.addEventListener("visibilitychange",()=>{if(live&&document.hidden)violation()});
-["contextmenu","copy","cut","paste","dragstart","drop","selectstart"].forEach(ev=>document.addEventListener(ev,e=>{if(live&&!(ev=="selectstart"&&e.target.tagName=="INPUT")){e.preventDefault();e.stopPropagation()}},true));
+const GUARDED=["contextmenu","copy","cut","paste","dragstart","drop","selectstart"];
+const guardFn=e=>{if(!live)return;if(e.type==="selectstart"&&e.target.tagName==="INPUT")return;e.preventDefault();e.stopPropagation()};
+const guardOn=()=>GUARDED.forEach(ev=>document.addEventListener(ev,guardFn,true));
+const guardOff=()=>GUARDED.forEach(ev=>document.removeEventListener(ev,guardFn,true));
 document.addEventListener("mousedown",e=>{if(live&&e.button==2){e.preventDefault();e.stopPropagation()}},true);
 addEventListener("keydown",e=>{if(!live)return;const c=e.ctrlKey||e.metaKey,k=e.code,sh=e.shiftKey;
 if(k=="F12"||k=="PrintScreen"||(c&&["KeyC","KeyV","KeyX","KeyA","KeyU","KeyS","KeyP","KeyF","Insert"].includes(k))||(c&&sh&&["KeyI","KeyJ","KeyC","KeyK"].includes(k))||(e.metaKey&&e.altKey&&["KeyI","KeyJ","KeyC","KeyU"].includes(k))||(sh&&k=="Insert")){e.preventDefault();e.stopPropagation()}},true);
@@ -336,7 +342,7 @@ $("#bf").onclick=()=>reqFs().then(unlock).catch(()=>{FSOK=false;unlock()})}
 document.addEventListener("fullscreenchange",()=>{if(live)document.fullscreenElement?unlock():fsLock()});
 
 /* ---------- HASIL ---------- */
-function finish(why,all){if(S.done)return;live=false;document.body.classList.remove("ex");clearInterval(tm);closeM();unlock();
+function finish(why,all){if(S.done)return;live=false;guardOff();document.body.classList.remove("ex");clearInterval(tm);closeM();unlock();
 const p=S.plan[S.n];S.hist.push({id:p.id,nama:p.nama,dur:S.dur,qs:S.qs,a:S.a,res:grade(S.qs,S.a),used:Math.min(S.dur*60,(Date.now()-S.start)/1000),why});
 if(all)for(let k=S.n+1;k<S.plan.length;k++){const x=S.plan[k];S.hist.push({id:x.id,nama:x.nama,dur:x.dur,qs:x.qs,a:{},res:grade(x.qs,{}),used:0,why:"Tidak dikerjakan"})}
 if(!all&&S.n<S.plan.length-1){S.n++;setSub();S.brk=Date.now()+CFG.jeda*1000;save();return lobby()}
@@ -360,15 +366,27 @@ modal(`<h2>Bank soal (${BANK.length})</h2><p class="mut">Tempel soal dalam forma
 $("#sv").onclick=()=>{try{const b=JSON.parse($("#bk").value);if(!Array.isArray(b)||!b.length||b.some(q=>!q.q||!q.tipe||q.kunci===undefined))throw 0;localStorage.setItem(CFG.bank,JSON.stringify(b));BANK=b;closeM()}catch(e){$("#ae").textContent="Format tidak valid: tiap soal wajib punya q, tipe, dan kunci."}};
 $("#rs").onclick=()=>{try{localStorage.removeItem(CFG.bank)}catch(e){}BANK=DEF;closeM()}}}
 /* ---------- KURSOR KUSTOM (desktop) ---------- */
-(()=>{const mq=matchMedia("(hover:hover) and (pointer:fine)"),rm=matchMedia("(prefers-reduced-motion:reduce)"),H=document.documentElement,g=$("#cg"),d=$("#cd");
+(()=>{
+const mq=matchMedia("(hover:hover) and (pointer:fine)"),rm=matchMedia("(prefers-reduced-motion:reduce)"),H=document.documentElement,g=$("#cg"),d=$("#cd");
 const INT="a,button,label,summary,select,[role=button],.opt,.pledge",TXT="input:not([type=checkbox]):not([type=radio]),textarea";
-let x=0,y=0,gx=0,gy=0,raf=0;
-const set=()=>H.classList.toggle("cc",mq.matches&&!rm.matches);set();mq.addEventListener("change",set);rm.addEventListener("change",set);
-function loop(){gx+=(x-gx)*.14;gy+=(y-gy)*.14;g.style.setProperty("--gx",gx+"px");g.style.setProperty("--gy",gy+"px");raf=(Math.abs(x-gx)>.3||Math.abs(y-gy)>.3)?requestAnimationFrame(loop):0}
-addEventListener("mousemove",e=>{if(!H.classList.contains("cc"))return;x=e.clientX;y=e.clientY;if(!H.classList.contains("cv")){gx=x;gy=y;H.classList.add("cv")}
+let x=-999,y=-999,gx=-999,gy=-999,raf=0,started=false;
+const clean=()=>{started=false;H.classList.remove("cv","h","t","dn")};
+const set=()=>{const on=mq.matches&&!rm.matches;H.classList.toggle("cc",on);if(!on)clean();else{x=-999;y=-999;gx=-999;gy=-999}};
+set();mq.addEventListener("change",set);rm.addEventListener("change",set);
+function loop(){if(document.hidden){raf=0;return}
+gx+=(x-gx)*.14;gy+=(y-gy)*.14;g.style.setProperty("--gx",gx+"px");g.style.setProperty("--gy",gy+"px");
+raf=(Math.abs(x-gx)>.3||Math.abs(y-gy)>.3)?requestAnimationFrame(loop):0}
+addEventListener("mousemove",e=>{if(!H.classList.contains("cc"))return;
+x=e.clientX;y=e.clientY;if(!started){gx=x;gy=y;started=true;H.classList.add("cv")}
 d.style.setProperty("--dx",x+"px");d.style.setProperty("--dy",y+"px");if(!raf)raf=requestAnimationFrame(loop);
-const t=e.target&&e.target.closest?e.target:null;H.classList.toggle("h",!!(t&&t.closest(INT)&&!t.closest(":disabled")));H.classList.toggle("t",!!(t&&t.closest(TXT)))},{passive:true});
-H.addEventListener("mouseleave",()=>H.classList.remove("cv"));
-addEventListener("mousedown",()=>H.classList.add("dn"));addEventListener("mouseup",()=>H.classList.remove("dn"));})();
+const t=(e.target&&e.target.closest)?e.target:null;
+H.classList.toggle("h",!!(t&&t.closest(INT)&&!t.closest("[disabled]")&&!t.matches(":disabled")));
+H.classList.toggle("t",!!(t&&t.closest(TXT)))},{passive:true});
+document.addEventListener("mouseout",e=>{if(!e.relatedTarget)clean()});
+addEventListener("blur",clean);
+addEventListener("mousedown",()=>{if(H.classList.contains("cc")&&started)H.classList.add("dn")});
+addEventListener("mouseup",()=>H.classList.remove("dn"));
+document.addEventListener("visibilitychange",()=>{if(document.hidden){cancelAnimationFrame(raf);raf=0}else if(started){gx=x;gy=y;raf=requestAnimationFrame(loop)}});
+})();
 login();
 </script></body></html>
