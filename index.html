@@ -140,10 +140,42 @@ b.fd{font-size:14px!important}.sbt .fd{font-size:15px!important}#cnt{font-size:1
 .md{backdrop-filter:blur(4px)}
 .bar i{background:linear-gradient(90deg,var(--pri),var(--acc))}
 @media(max-width:560px){.logo{font-size:12px}.hero h1{font-size:24px}.timer{font-size:19px;min-width:80px}#cnt{font-size:12px!important}.ring div{font-size:30px}.cd{font-size:72px}.sbt .fd{font-size:13px!important}.btn.big{font-size:13px}}
+/* KURSOR KUSTOM (hanya desktop dengan mouse; dimatikan untuk prefers-reduced-motion) */
+.cglow,.cdot{position:fixed;top:0;left:0;pointer-events:none;opacity:0;transition:opacity .3s}
+.cglow{z-index:90;width:440px;height:440px;margin:-220px 0 0 -220px;border-radius:50%;background:radial-gradient(circle,rgba(255,26,46,.20) 0,rgba(255,26,46,.08) 38%,transparent 70%);transform:translate3d(var(--gx,-999px),var(--gy,-999px),0)}
+.cdot{z-index:100;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--pri);box-shadow:0 0 14px 2px rgba(255,26,46,.65);transform:translate3d(var(--dx,-999px),var(--dy,-999px),0);scale:var(--ds,1);transition:opacity .3s,scale .18s ease}
+html.cc,html.cc *{cursor:none!important}
+html.cc input:not([type=checkbox]):not([type=radio]),html.cc textarea{cursor:text!important}
+html.cc.cv .cglow,html.cc.cv .cdot{opacity:1}
+html.cc.cv body.ex .cglow{opacity:.45}
+html.cc.h .cdot{--ds:1.9;opacity:.6}
+html.cc.dn .cdot{--ds:.7}
+html.cc.t .cdot{opacity:0}
+/* MICRO ANIMASI (halus, tidak berkedip) */
+.btn,.opt,.nav button,.bs button,.seg span,.pledge,.sbt{transition:transform .15s ease,border-color .15s ease,background-color .15s ease,box-shadow .15s ease,filter .15s ease}
+.btn:not(:disabled):hover,.nav button:hover{transform:translateY(-1px)}
+.btn:not(:disabled):active,.nav button:active,.opt:active,.bs button:active{transform:scale(.97)}
+.opt:hover{border-color:var(--pri);transform:translateX(2px)}
+.opt.on{animation:pop .18s ease-out}
+.seg span:hover,.pledge:hover{border-color:var(--pri)}
+#app>*{animation:rise .28s ease-out both}
+.md{animation:fade .15s ease-out}.box{animation:pop .18s ease-out}
+.cd{animation:cdz .45s ease-out}
+.bar i{animation:grow .8s ease-out}
+.ring{animation:ringin .9s ease-out}
+@property --p{syntax:"<number>";inherits:false;initial-value:0}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}}
+@keyframes fade{from{opacity:0}}
+@keyframes pop{from{transform:scale(.97);opacity:.6}}
+@keyframes cdz{from{transform:scale(1.35);opacity:.2}}
+@keyframes grow{from{width:0}}
+@keyframes ringin{from{--p:0}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}}
 @media print{.top,.noprint{display:none!important}body::before{display:none}}
 </style></head><body>
 <header class="top"><div class="logo fd"><img class="lg" src="logo-tcr.png" alt="" onerror="this.style.display='none'"><span class="lt">The Champion Race</span><span class="mut sub">Simulasi</span></div><div class="sp"></div><button class="btn noprint" id="th" aria-label="Ganti tema">Tema</button></header>
 <main class="wrap" id="app"></main>
+<div class="cglow" id="cg" aria-hidden="true"></div><div class="cdot" id="cd" aria-hidden="true"></div>
 <script>
 const CFG={subtes:[{id:"bind",nama:"Bahasa Indonesia",dur:{SD:30,SMP:30,SMA:30}},{id:"mat",nama:"Matematika",dur:{SD:30,SMP:30,SMA:30}}],acak:false,jeda:30,bobot:[1,2,3,4,5],maxLanggar:3,pin:"admin123",key:"tcr_sim_v5",bank:"tcr_bank_v5"};
 const GAMBUT=`<p><b>Paragraf 1</b><br>Lahan gambut tropis di Indonesia memegang peranan krusial dalam menjaga keseimbangan iklim global karena fungsinya sebagai salah satu penyimpan karbon terestrial raksasa di bumi. Meskipun hanya mencakup sekitar tiga persen dari total luas daratan dunia, lahan gambut mampu mengikat volume karbon dua kali lebih banyak daripada yang tersimpan di seluruh vegetasi hutan daratan bumi. Keberadaan air yang melimpah dalam ekosistem gambut alami menciptakan kondisi anaerobik yang melambatkan proses pembusukan sisa-sisa tumbuhan, sehingga akumulasi bahan organik dapat bertahan hingga ribuan tahun tanpa terurai menjadi gas emisi.</p>
@@ -327,5 +359,16 @@ $("#ok").onclick=()=>{if($("#pn").value!==CFG.pin)return $("#ae").textContent="P
 modal(`<h2>Bank soal (${BANK.length})</h2><p class="mut">Tempel soal dalam format JSON. Tersimpan di browser ini saja.</p><textarea class="in" id="bk" spellcheck="false">${esc(JSON.stringify(BANK,null,1))}</textarea><p class="err" id="ae"></p><div class="acts"><button class="btn" onclick="closeM()">Tutup</button><button class="btn" id="rs">Kembali ke contoh</button><button class="btn pri" id="sv">Simpan</button></div>`);
 $("#sv").onclick=()=>{try{const b=JSON.parse($("#bk").value);if(!Array.isArray(b)||!b.length||b.some(q=>!q.q||!q.tipe||q.kunci===undefined))throw 0;localStorage.setItem(CFG.bank,JSON.stringify(b));BANK=b;closeM()}catch(e){$("#ae").textContent="Format tidak valid: tiap soal wajib punya q, tipe, dan kunci."}};
 $("#rs").onclick=()=>{try{localStorage.removeItem(CFG.bank)}catch(e){}BANK=DEF;closeM()}}}
+/* ---------- KURSOR KUSTOM (desktop) ---------- */
+(()=>{const mq=matchMedia("(hover:hover) and (pointer:fine)"),rm=matchMedia("(prefers-reduced-motion:reduce)"),H=document.documentElement,g=$("#cg"),d=$("#cd");
+const INT="a,button,label,summary,select,[role=button],.opt,.pledge",TXT="input:not([type=checkbox]):not([type=radio]),textarea";
+let x=0,y=0,gx=0,gy=0,raf=0;
+const set=()=>H.classList.toggle("cc",mq.matches&&!rm.matches);set();mq.addEventListener("change",set);rm.addEventListener("change",set);
+function loop(){gx+=(x-gx)*.14;gy+=(y-gy)*.14;g.style.setProperty("--gx",gx+"px");g.style.setProperty("--gy",gy+"px");raf=(Math.abs(x-gx)>.3||Math.abs(y-gy)>.3)?requestAnimationFrame(loop):0}
+addEventListener("mousemove",e=>{if(!H.classList.contains("cc"))return;x=e.clientX;y=e.clientY;if(!H.classList.contains("cv")){gx=x;gy=y;H.classList.add("cv")}
+d.style.setProperty("--dx",x+"px");d.style.setProperty("--dy",y+"px");if(!raf)raf=requestAnimationFrame(loop);
+const t=e.target&&e.target.closest?e.target:null;H.classList.toggle("h",!!(t&&t.closest(INT)&&!t.closest(":disabled")));H.classList.toggle("t",!!(t&&t.closest(TXT)))},{passive:true});
+H.addEventListener("mouseleave",()=>H.classList.remove("cv"));
+addEventListener("mousedown",()=>H.classList.add("dn"));addEventListener("mouseup",()=>H.classList.remove("dn"));})();
 login();
 </script></body></html>
