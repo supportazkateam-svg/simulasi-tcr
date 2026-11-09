@@ -16,7 +16,7 @@ h1,h2,h3,.fd{font-family:'Orbitron','Segoe UI',system-ui,sans-serif;letter-spaci
 .logo{font-size:22px;font-weight:700;display:flex;align-items:center;gap:8px}
 .lg{height:34px;width:auto;border-radius:6px}
 .sp{flex:1}
-.wrap{max-width:1040px;margin:0 auto;padding:18px 16px 60px}
+.wrap{max-width:1120px;margin:0 auto;padding:18px 16px 60px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
 .btn{font:700 15px 'Space Grotesk',sans-serif;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:10px 16px;cursor:pointer}
 .btn:hover{border-color:var(--pri)}
@@ -61,7 +61,7 @@ ul.rules{padding-left:20px;margin:10px 0 18px}ul.rules li{margin:7px 0}
 .meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
 .tag{background:var(--pri);color:var(--onpri);border-radius:6px;padding:2px 10px;font-weight:700;font-size:13px}
 .tag.w{background:var(--acc);color:#2a1d00}
-.stim{background:var(--soft);border-left:5px solid var(--pri);padding:14px 16px;border-radius:8px;margin-bottom:14px;max-width:72ch}
+.stim{background:var(--soft);border-left:5px solid var(--pri);padding:14px 16px;border-radius:8px;margin-bottom:14px;max-width:90ch}
 .stim{overflow-x:auto}.stim p{margin:0 0 10px}.stim p:last-child{margin-bottom:0}.stim table{border-collapse:collapse;width:100%;font-size:15px;margin:8px 0}.stim th,.stim td{border:1px solid var(--line);padding:6px 10px;text-align:left}.stim th{background:var(--card)}.stim pre{white-space:pre-wrap;font:13.5px/1.5 ui-monospace,monospace;margin:6px 0 0;background:var(--card);padding:10px 12px;border-radius:8px}
 .stim ol,.stim ul{margin:6px 0;padding-left:22px}.sbts{display:grid;gap:8px;margin:16px 0}.sbt{display:flex;align-items:center;gap:12px;padding:10px 14px;border:2px solid var(--line);border-radius:12px}.sbt b{width:32px;height:32px;border-radius:8px;background:var(--soft);display:grid;place-items:center;font:700 18px Orbitron,sans-serif;flex:none}.sbt div{flex:1;min-width:0}.sbt small{display:block;color:var(--mut)}.sbt em{font-style:normal;font-weight:700;font-size:14px}.sbt.cu{border-color:var(--pri);background:var(--soft)}.sbt.dn em{color:var(--ok)}.sbt.lk{opacity:.55}
 .bkw{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:8px 0 16px}.bkw b{font-size:44px;line-height:1;color:var(--pri);min-width:2ch;text-align:center}
@@ -69,7 +69,7 @@ ul.rules{padding-left:20px;margin:10px 0 18px}ul.rules li{margin:7px 0}
 .pledge{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--bg);cursor:pointer;margin:0 0 14px;font-weight:600}.pledge input{width:22px;height:22px;flex:none;margin-top:2px;accent-color:var(--pri)}
 .qi{display:block;margin:10px auto;height:auto;background:#fff;padding:6px;border-radius:8px}
 .stars{color:var(--acc);font-size:18px;letter-spacing:1px;white-space:nowrap;line-height:1}.stars i{font-style:normal;color:var(--line)}
-.qt{font-size:19px;font-weight:700;margin-bottom:14px;max-width:72ch}
+.qt{font-size:19px;font-weight:700;margin-bottom:14px;max-width:90ch}
 .qi{max-width:100%;border-radius:8px;margin-bottom:12px}
 .opt{display:flex;gap:12px;align-items:center;width:100%;text-align:left;font:inherit;padding:12px 14px;margin:8px 0;border:2px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);cursor:pointer}
 .opt b{flex:none;width:32px;height:32px;border-radius:8px;background:var(--soft);display:grid;place-items:center;font-family:Orbitron,sans-serif;font-size:18px}
@@ -106,7 +106,7 @@ body.ex{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}bod
 @media(max-width:560px){
 .top{padding:8px 12px;gap:8px}.logo{font-size:18px;gap:7px}.lg{height:30px}.sub{display:none}.top .btn{padding:7px 12px;font-size:14px}
 .wrap{padding:12px 12px 48px}.card{padding:16px}.box{padding:18px}.hero h1{font-size:34px}
-.hud{gap:8px}.hud .sp{display:none}.hud .who{flex:1;min-width:0}.hud .timer{order:2;font-size:26px;min-width:86px;padding:2px 10px}.hud #cnt{order:3;flex:1 1 100%;font-size:16px!important}
+.hud{gap:8px}.hud .sp{display:none}.hud .who{flex:1;min-width:0}.hud .timer{order:2;font-size:26px;min-width:86px;padding:2px 10px}.hud #cnt{order:3;flex:1 1 0;min-width:0;font-size:16px!important}
 .qt{font-size:17px}.stim{padding:12px}.opt{padding:11px 12px}
 .bs{flex-direction:column;align-items:stretch}.bs div{flex:none}.bs button{flex:1;padding:10px}
 .acts .btn{flex:1 1 auto;padding:11px 10px}
@@ -175,6 +175,24 @@ html.cc.t .cdot{opacity:0}
 /* Gambar soal: proporsional di desktop, tetap di tengah */
 .qi{display:block;margin:12px auto;width:auto;height:auto;max-width:min(100%,540px);max-height:min(56vh,520px);object-fit:contain}
 @media(max-width:560px){.qi{max-width:100%;max-height:none}}
+/* Daftar soal */
+.drb{position:fixed;inset:0;background:rgba(5,5,10,.6);z-index:44;animation:fade .15s ease-out}
+.dr{position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);z-index:45;background:var(--card);border-left:1px solid var(--line);box-shadow:-20px 0 50px rgba(0,0,0,.4);display:flex;flex-direction:column;animation:slidein .22s ease-out;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.drh{display:flex;align-items:center;gap:10px;padding:16px 18px 8px}.drh h2{margin:0;flex:1}
+.dtm{font:700 16px 'Orbitron',sans-serif;color:var(--gx)}
+.drs{margin:0;padding:0 18px 10px;color:var(--mut);font-size:14px;border-bottom:1px solid var(--line)}
+.drl{list-style:none;margin:0;padding:10px 12px;overflow-y:auto;flex:1;display:grid;gap:6px;align-content:start}
+.dri{display:flex;align-items:center;gap:12px;width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:8px 12px;cursor:pointer;position:relative;transition:border-color .15s,background-color .15s,transform .15s}
+.dri:hover{border-color:var(--pri);transform:translateX(-2px)}
+.dri b{flex:none;width:34px;height:34px;border-radius:8px;background:var(--soft);display:grid;place-items:center;font:700 14px 'Orbitron',sans-serif}
+.dri.ans{border-color:var(--pri)}.dri.cur{background:var(--soft);box-shadow:0 0 0 1px var(--pri) inset}.dri.cur b{background:var(--pri);color:var(--onpri)}
+.dri .dn2{flex:1;min-width:0}.dri .dn2 .fd{font-size:14px}.dri small{display:block;color:var(--mut);font-size:13px}
+.dri.ans small{color:var(--ok)}
+.dri.fl::after{content:"";position:absolute;top:8px;right:10px;width:10px;height:10px;border-radius:50%;background:var(--acc)}
+.drf{padding:12px 18px 16px;border-top:1px solid var(--line)}
+@keyframes slidein{from{transform:translateX(24px);opacity:0}}
+@media(max-width:560px){.hud #dl{order:4;padding:7px 12px;font-size:14px}}
+@media(max-width:560px){.hud{display:grid;grid-template-columns:1fr auto;gap:8px 10px;align-items:center}.hud .sp{display:none}.hud .who{grid-column:1;grid-row:1;min-width:0}.hud .timer{grid-column:2;grid-row:1}.hud #cnt{grid-column:1;grid-row:2;font-size:13px!important}.hud #dl{grid-column:2;grid-row:2}}
 @media print{.top,.noprint{display:none!important}body::before{display:none}}
 </style></head><body>
 <header class="top"><div class="logo fd"><img class="lg" src="logo-tcr.png" alt="" onerror="this.style.display='none'"><span class="lt">The Champion Race</span><span class="mut sub">Simulasi</span></div><div class="sp"></div><button class="btn noprint" id="th" aria-label="Ganti tema">Tema</button></header>
@@ -295,26 +313,26 @@ if(brk){const upd=()=>{const l=Math.ceil((S.brk-Date.now())/1000),e=$("#bk");if(
 /* ---------- UJIAN ---------- */
 
 function exam(){live=true;guardOn();clearInterval(bk);S.brk=0;document.body.classList.add("ex");
-app.innerHTML=`<div class="card"><div class="hud"><div class="who">${esc(S.u.nama)}<small>Subtes ${S.n+1}/${S.plan.length} · ${S.plan[S.n].nama}</small></div><div class="sp"></div><div class="fd" id="cnt" style="font-size:20px"></div><div class="timer" id="tm">--:--</div></div>
+app.innerHTML=`<div class="card"><div class="hud"><div class="who">${esc(S.u.nama)}<small>Subtes ${S.n+1}/${S.plan.length} · ${S.plan[S.n].nama}</small></div><div class="sp"></div><div class="fd" id="cnt" style="font-size:20px"></div><button class="btn" id="dl" aria-haspopup="dialog">Daftar soal</button><div class="timer" id="tm">--:--</div></div>
 </div>
-<div class="main" style="margin-top:16px"><div class="card" id="qbox"></div><div class="card"><b class="fd" style="font-size:20px">Navigasi soal</b><div class="nav" id="nav"></div><div class="leg">Bingkai merah: terjawab · Titik kuning: ragu-ragu</div><div class="acts"><button class="btn pri" style="width:100%" id="fin">${S.n<S.plan.length-1?"Selesaikan subtes":"Selesaikan ujian"}</button></div></div></div>`;
-$("#fin").onclick=confirmFin;drawQ();drawNav();tick();clearInterval(tm);tm=setInterval(tick,500);fsLock()}
+<div class="card" id="qbox" style="margin-top:16px"></div>`;
+$("#dl").onclick=openList;drawQ();drawNav();tick();clearInterval(tm);tm=setInterval(tick,500);fsLock()}
 function drawQ(){const q=S.qs[S.i],a=S.a[S.i];let h=`<div class="meta"><span class="tag">${q.kat||"Umum"}</span>${stars(q)}<span class="mut">· Soal ${S.i+1} dari ${S.qs.length}</span>${S.f[S.i]?'<span class="tag w">Ragu-ragu</span>':""}</div>`;
 if(q.stimulus)h+=`<div class="stim">${q.stimulus}</div>`;h+=`<div class="qt">${q.q}</div>`;if(q.img)h+=`<img class="qi" src="${q.img}" alt="">`;
 if(q.tipe=="pg")h+=q.opsi.map((o,i)=>`<button class="opt ${a===i?"on":""}" onclick="pick(${i})"><b>${L(i)}</b><span>${o}</span></button>`).join("");
 else if(q.tipe=="pgk")h+=`<p class="mut">Pilih lebih dari satu jawaban.</p>`+q.opsi.map((o,i)=>{const on=(a||[]).includes(i);return `<button class="opt ${on?"on":""}" onclick="pick(${i})"><b>${on?"✓":L(i)}</b><span>${o}</span></button>`}).join("");
 else if(q.tipe=="bs")h+=q.opsi.map((o,i)=>{const v=(a||[])[i];return `<div class="bs"><span>${o}</span><div><button class="${v===true?"on":""}" onclick="pick(${i},true)">Benar</button><button class="${v===false?"on":""}" onclick="pick(${i},false)">Salah</button></div></div>`}).join("");
 else h+=`<input class="in" id="isi" placeholder="Ketik jawabanmu" value="${esc(a||"")}" oninput="pick(this.value)" autocomplete="off">`;
-h+=`<div class="acts"><button class="btn" onclick="go(-1)" ${S.i?"":"disabled"}>Sebelumnya</button><button class="btn" onclick="flag()">${S.f[S.i]?"Hapus tanda ragu":"Ragu-ragu"}</button><button class="btn pri" onclick="go(1)" ${S.i<S.qs.length-1?"":"disabled"}>Selanjutnya</button></div>`;$("#qbox").innerHTML=h}
-function drawNav(){$("#nav").innerHTML=S.qs.map((q,i)=>`<button class="${i==S.i?"cur":done(q,S.a[i])?"ans":""} ${S.f[i]?"fl":""}" onclick="S.i=${i};save();drawQ();drawNav()" aria-label="Soal ${i+1}">${i+1}</button>`).join("");
-const n=S.qs.filter((q,i)=>done(q,S.a[i])).length;$("#cnt").textContent=n+" / "+S.qs.length+" terjawab"}
+h+=`<div class="acts"><button class="btn" onclick="go(-1)" ${S.i?"":"disabled"}>Sebelumnya</button><button class="btn" onclick="flag()">${S.f[S.i]?"Hapus tanda ragu":"Ragu-ragu"}</button>${S.i<S.qs.length-1?`<button class="btn pri" onclick="go(1)">Selanjutnya</button>`:`<button class="btn pri" onclick="confirmFin()">${S.n<S.plan.length-1?"Selesaikan subtes":"Selesaikan ujian"}</button>`}</div>`;$("#qbox").innerHTML=h}
+function drawNav(){const n=S.qs.filter((q,i)=>done(q,S.a[i])).length;$("#cnt").textContent=n+" / "+S.qs.length+" terjawab"}
+
 function pick(i,v){const q=S.qs[S.i];
 if(q.tipe=="pg")S.a[S.i]=i;else if(q.tipe=="pgk"){const s=new Set(S.a[S.i]||[]);s.has(i)?s.delete(i):s.add(i);S.a[S.i]=[...s].sort((x,y)=>x-y)}
 else if(q.tipe=="bs"){const x=(S.a[S.i]||new Array(q.opsi.length).fill(null)).slice();x[i]=v;S.a[S.i]=x}else S.a[S.i]=i;
 save();drawNav();if(q.tipe!="isian")drawQ()}
-const go=d=>{S.i=Math.min(S.qs.length-1,Math.max(0,S.i+d));save();drawQ();drawNav()};
+const go=d=>{S.i=Math.min(S.qs.length-1,Math.max(0,S.i+d));save();drawQ();drawNav();scrollTo(0,0)};
 const flag=()=>{S.f[S.i]=!S.f[S.i];save();drawQ();drawNav()};
-function tick(){const left=(S.end-Date.now())/1000,t=$("#tm");if(!t)return;t.textContent=mmss(left);t.classList.toggle("low",left<300);
+function tick(){const left=(S.end-Date.now())/1000,t=$("#tm");if(!t)return;t.textContent=mmss(left);t.classList.toggle("low",left<300);const dt=$("#dtm");if(dt)dt.textContent=mmss(left);
 if(left<=0)finish("Waktu habis")}
 function confirmFin(){const n=S.qs.filter((q,i)=>done(q,S.a[i])).length,k=S.qs.length-n,f=Object.values(S.f).filter(Boolean).length;
 modal(`<h2>Selesaikan subtes ${S.plan[S.n].nama}?</h2><p>${n} soal terjawab${k?`, <b class="rx">${k} soal belum dijawab</b>`:""}${f?`, ${f} soal ditandai ragu-ragu`:""}. Setelah selesai, jawaban tidak bisa diubah dan kamu tidak bisa kembali ke subtes ini.${S.n<S.plan.length-1?" Subtes berikutnya akan terbuka.":""}</p><div class="acts"><button class="btn" onclick="closeM()">Kembali</button><button class="btn pri" onclick="closeM();finish('Selesai')">Ya, selesaikan</button></div>`)}
@@ -329,7 +347,20 @@ addEventListener("keydown",e=>{if(!live)return;const c=e.ctrlKey||e.metaKey,k=e.
 if(k=="F12"||k=="PrintScreen"||(c&&["KeyC","KeyV","KeyX","KeyA","KeyU","KeyS","KeyP","KeyF","Insert"].includes(k))||(c&&sh&&["KeyI","KeyJ","KeyC","KeyK"].includes(k))||(e.metaKey&&e.altKey&&["KeyI","KeyJ","KeyC","KeyU"].includes(k))||(sh&&k=="Insert")){e.preventDefault();e.stopPropagation()}},true);
 addEventListener("keyup",e=>{if(live&&e.code=="PrintScreen"){try{navigator.clipboard.writeText("").catch(()=>{})}catch(x){}}});
 addEventListener("beforeunload",e=>{if(live){e.preventDefault();e.returnValue=""}});
-addEventListener("keydown",e=>{if(!live||e.target.tagName=="INPUT"||$("#md")||$("#fsm"))return;if(e.key=="ArrowRight")go(1);else if(e.key=="ArrowLeft")go(-1);else if(e.key=="f")flag();else if(/^[1-9]$/.test(e.key)){const q=S.qs[S.i];if(q.tipe=="pg"||q.tipe=="pgk"){const i=+e.key-1;if(i<q.opsi.length)pick(i)}}});
+addEventListener("keydown",e=>{const dw=$("#drw");if(dw){if(e.key=="Escape"){e.preventDefault();closeList()}else if(e.key=="Tab"){const f=[...dw.querySelectorAll("button")],a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}return}
+if(!live||e.target.tagName=="INPUT"||$("#md")||$("#fsm"))return;if(e.key=="ArrowRight")go(1);else if(e.key=="ArrowLeft")go(-1);else if(e.key=="f")flag();else if(/^[1-9]$/.test(e.key)){const q=S.qs[S.i];if(q.tipe=="pg"||q.tipe=="pgk"){const i=+e.key-1;if(i<q.opsi.length)pick(i)}}});
+
+/* ---------- DAFTAR SOAL (drawer) ---------- */
+let lastF=null;
+function openList(){if($("#drw"))return;lastF=document.activeElement;
+const n=S.qs.filter((q,i)=>done(q,S.a[i])).length,r=Object.values(S.f).filter(Boolean).length,fin=S.n<S.plan.length-1?"Selesaikan subtes":"Selesaikan ujian";
+const w=document.createElement("div");w.id="drw";
+w.innerHTML=`<div class="drb" id="drb"></div><aside class="dr" role="dialog" aria-modal="true" aria-labelledby="drt"><div class="drh"><h2 id="drt">Daftar soal</h2><span class="dtm" id="dtm" aria-hidden="true">${mmss((S.end-Date.now())/1000)}</span><button class="btn" id="drx">Tutup</button></div><p class="drs">${n} terjawab · ${r} ragu-ragu · ${S.qs.length-n} belum dijawab</p><ul class="drl">${S.qs.map((q,i)=>{const d=done(q,S.a[i]);return `<li><button class="dri ${d?"ans":""} ${i==S.i?"cur":""} ${S.f[i]?"fl":""}" onclick="jump(${i})"${i==S.i?' aria-current="true"':""}><b>${i+1}</b><div class="dn2"><span class="fd">Soal ${i+1}</span> <span class="stars">${"★".repeat(lv(q))}</span><small>${d?"Terjawab":"Belum dijawab"}${S.f[i]?" · Ragu-ragu":""}${i==S.i?" · Sedang dibuka":""}</small></div></button></li>`}).join("")}</ul><div class="drf"><button class="btn pri big" id="drfin">${fin}</button></div></aside>`;
+document.body.appendChild(w);
+$("#drb").onclick=()=>closeList();$("#drx").onclick=()=>closeList();$("#drfin").onclick=()=>{closeList(false);confirmFin()};
+const c=w.querySelector(".dri.cur");if(c){c.focus();c.scrollIntoView({block:"center"})}else $("#drx").focus()}
+function closeList(restore=true){const w=$("#drw");if(!w)return;w.remove();if(restore&&lastF&&document.contains(lastF))lastF.focus()}
+function jump(i){S.i=i;save();drawQ();drawNav();closeList();scrollTo(0,0)}
 
 /* ---------- KUNCI LAYAR PENUH ---------- */
 let FSOK=!!document.fullscreenEnabled;
@@ -341,7 +372,7 @@ $("#bf").onclick=()=>reqFs().then(unlock).catch(()=>{FSOK=false;unlock()})}
 document.addEventListener("fullscreenchange",()=>{if(live)document.fullscreenElement?unlock():fsLock()});
 
 /* ---------- HASIL ---------- */
-function finish(why,all){if(S.done)return;live=false;guardOff();document.body.classList.remove("ex");clearInterval(tm);closeM();unlock();
+function finish(why,all){if(S.done)return;live=false;guardOff();closeList(false);document.body.classList.remove("ex");clearInterval(tm);closeM();unlock();
 const p=S.plan[S.n];S.hist.push({id:p.id,nama:p.nama,dur:S.dur,qs:S.qs,a:S.a,res:grade(S.qs,S.a),used:Math.min(S.dur*60,(Date.now()-S.start)/1000),why});
 if(all)for(let k=S.n+1;k<S.plan.length;k++){const x=S.plan[k];S.hist.push({id:x.id,nama:x.nama,dur:x.dur,qs:x.qs,a:{},res:grade(x.qs,{}),used:0,why:"Tidak dikerjakan"})}
 if(!all&&S.n<S.plan.length-1){S.n++;setSub();S.brk=Date.now()+CFG.jeda*1000;save();return lobby()}
