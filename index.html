@@ -100,7 +100,6 @@ ul.rules{padding-left:20px;margin:10px 0 18px}ul.rules li{margin:7px 0}
 details{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:10px 14px;background:var(--bg)}
 summary{cursor:pointer;font-weight:700}
 .rv{color:var(--ok)}.rx{color:var(--bad)}
-textarea.in{min-height:240px;font:13px ui-monospace,monospace}
 html{-webkit-text-size-adjust:100%}button{touch-action:manipulation}
 body.ex{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}body.ex input{-webkit-user-select:text;user-select:text}
 .logo{min-width:0;white-space:nowrap}.lt{overflow:hidden;text-overflow:ellipsis}.sub{font-weight:600}.lg{flex:none}
@@ -113,7 +112,6 @@ body.ex{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}bod
 .acts .btn{flex:1 1 auto;padding:11px 10px}
 .stim table{font-size:13px}.stim th,.stim td{padding:5px 6px}
 .ring{width:140px;height:140px}.ring div{width:110px;height:110px;font-size:40px}.cd{font-size:96px}
-textarea.in{font-size:16px}
 }
 /* TEMA RESMI TCR: merah-emas gelap, Orbitron + Space Grotesk */
 body{background:radial-gradient(900px 500px at 12% -8%,rgba(255,26,46,var(--gl)),transparent 60%),radial-gradient(700px 420px at 95% 8%,rgba(255,184,0,var(--gg)),transparent 60%),var(--bg)}
@@ -180,7 +178,7 @@ html.cc.t .cdot{opacity:0}
 <main class="wrap" id="app"></main>
 <div class="cglow" id="cg" aria-hidden="true"></div><div class="cdot" id="cd" aria-hidden="true"></div>
 <script>
-const CFG={subtes:[{id:"bind",nama:"Bahasa Indonesia",dur:{SD:30,SMP:30,SMA:30}},{id:"mat",nama:"Matematika",dur:{SD:30,SMP:30,SMA:30}}],acak:false,jeda:30,bobot:[1,2,3,4,5],maxLanggar:3,pin:"admin123",key:"tcr_sim_v5",bank:"tcr_bank_v5"};
+const CFG={subtes:[{id:"bind",nama:"Bahasa Indonesia",dur:{SD:30,SMP:30,SMA:30}},{id:"mat",nama:"Matematika",dur:{SD:30,SMP:30,SMA:30}}],acak:false,jeda:30,bobot:[1,2,3,4,5],maxLanggar:3,key:"tcr_sim_v5"};
 const GAMBUT=`<p><b>Paragraf 1</b><br>Lahan gambut tropis di Indonesia memegang peranan krusial dalam menjaga keseimbangan iklim global karena fungsinya sebagai salah satu penyimpan karbon terestrial raksasa di bumi. Meskipun hanya mencakup sekitar tiga persen dari total luas daratan dunia, lahan gambut mampu mengikat volume karbon dua kali lebih banyak daripada yang tersimpan di seluruh vegetasi hutan daratan bumi. Keberadaan air yang melimpah dalam ekosistem gambut alami menciptakan kondisi anaerobik yang melambatkan proses pembusukan sisa-sisa tumbuhan, sehingga akumulasi bahan organik dapat bertahan hingga ribuan tahun tanpa terurai menjadi gas emisi.</p>
 <p><b>Paragraf 2</b><br>Namun, dalam beberapa dekade terakhir, konversi lahan gambut secara tidak terkendali memicu degradasi ekosistem perairan dan daratan secara luas. Pembuatan saluran drainase buatan atau kanalisasi menyebabkan permukaan gambut menyusut, memicu proses mikroba pengurai bekerja secara masif, dan mengubah fungsi gambut dari penyerap karbon (<i>carbon sink</i>) menjadi pelepas emisi karbon (<i>carbon source</i>). Saat musim kemarau tiba, gambut yang mengering menjadi sangat rentan terbakar hingga ke lapisan dalam, menghasilkan kabut asap beracun yang melintasi batas negara dan melepaskan emisi gas rumah kaca dalam jumlah yang sangat mengkhawatirkan.</p>
 <p><b>Paragraf 3</b><br>Guna menanggulangi kerentanan tersebut, pemerintah bersama lembaga lingkungan menggalakkan strategi restorasi ekosistem gambut secara terpadu melalui pendekatan 3R, yaitu <i>Rewetting</i> (pembasahan kembali), <i>Revegetation</i> (penanaman kembali), dan <i>Revitalisation</i> (pemulihan mata pencaharian masyarakat). Pembasahan dilakukan dengan membangun sekat kanal (<i>canal blocking</i>) untuk menaikkan kembali tinggi muka air tanah. Penanaman kembali menggunakan spesies lokal seperti jelutung rawa dan belangeran yang tahan genangan. Sementara itu, pemulihan ekonomi masyarakat diarahkan pada budi daya perikanan darat dan komoditas non-kayu agar warga desa tidak lagi bergantung pada pembalakan liar atau pembukaan lahan dengan cara membakar.</p>
@@ -243,7 +241,7 @@ const MAT=[
 {stimulus:`<p>Koperasi unit desa membeli 75 keranjang buah apel dari petani, dan setiap keranjang berisi 48 buah apel. Harga beli apel tersebut adalah Rp120.000,00 per keranjang. Saat pemeriksaan kualitas di gudang, ditemukan 120 buah apel yang busuk dan harus dibuang. Seluruh sisa apel yang baik dikemas ulang ke dalam kantong plastik kecil yang masing-masing memuat 12 buah apel, lalu dijual dengan harga Rp40.000,00 per kantong.</p>`,q:"Berapa rupiah keuntungan bersih yang diperoleh koperasi dari seluruh transaksi tersebut?",opsi:["Rp3.200.000,00","Rp3.000.000,00","Rp2.900.000,00","Rp2.600.000,00"],kunci:3,bahas:"<b>Operasi hitung campuran (C5).</b> Jumlah apel = 75 × 48 = 3.600; apel baik = 3.600 − 120 = 3.480; kantong = 3.480 : 12 = 290. Pendapatan = 290 × 40.000 = Rp11.600.000. Modal = 75 × 120.000 = Rp9.000.000. Keuntungan bersih = Rp2.600.000. Opsi B muncul jika apel busuk tidak dikurangkan (300 kantong)."}
 ].map((q,i)=>({sub:"mat",level:[4,5,4,5,4,5,4,4,5,4,5,4,5,4,5][i],jenjang:["SD"],kat:"Matematika",tipe:"pg",...q}));
 const DEF=[...BIND,...MAT];
-let BANK=DEF;try{const b=JSON.parse(localStorage.getItem(CFG.bank)||"null");if(Array.isArray(b)&&b.length)BANK=b}catch(e){}
+const BANK=DEF;
 const $=s=>document.querySelector(s),app=$("#app"),L=i=>String.fromCharCode(65+i);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const mmss=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
@@ -271,9 +269,7 @@ app.innerHTML=`${rb}<div class="hero"><div><h1>Siap balapan<br><span class="gt">
 <label for="nm">Nama peserta</label><input class="in" id="nm" maxlength="60" placeholder="Nama lengkap">
 <label>Jenjang</label><div class="seg">${["SD","SMP","SMA"].map((j,i)=>`<label><input type="radio" name="jn" value="${j}" ${i?"":"checked"}><span>${j}</span></label>`).join("")}</div>
 <label for="sk">Asal sekolah</label><input class="in" id="sk" maxlength="80" placeholder="Contoh: SDN 1 Kediri">
-<p class="err" id="er" role="alert"></p><button class="btn pri big">Masuk ke lobi</button>
-<p class="leg" style="margin:12px 0 0"><a href="#" id="ad" class="mut">Panel admin</a></p></form></div>`;
-$("#ad").onclick=e=>{e.preventDefault();admin()};
+<p class="err" id="er" role="alert"></p><button class="btn pri big">Masuk ke lobi</button></form></div>`;
 $("#f").onsubmit=e=>{e.preventDefault();const nama=$("#nm").value.trim(),sekolah=$("#sk").value.trim(),jenjang=document.querySelector("[name=jn]:checked").value;
 if(nama.length<3)return $("#er").textContent="Isi nama peserta minimal 3 huruf.";
 if(sekolah.length<3)return $("#er").textContent="Isi asal sekolah.";
@@ -359,12 +355,6 @@ app.innerHTML=`<div class="card"><div style="display:flex;gap:24px;align-items:c
 <p style="margin:16px 0 0"><span class="slg">JUJUR ITU JUARA</span></p><div class="acts noprint"><button class="btn pri" onclick="print()">Cetak hasil</button><button class="btn" onclick="login()">Peserta baru</button></div></div>
 <h2 style="margin:22px 0 4px">Pembahasan</h2>${H.map(h=>`<h3 class="fd" style="font-size:24px;margin:16px 0 4px">${h.nama}</h3>${rev(h)}`).join("")}`;scrollTo(0,0)}
 
-/* ---------- ADMIN ---------- */
-function admin(){modal(`<h2>Panel admin</h2><label for="pn">PIN</label><input class="in" id="pn" type="password"><p class="err" id="ae"></p><div class="acts"><button class="btn" onclick="closeM()">Tutup</button><button class="btn pri" id="ok">Buka</button></div>`);
-$("#ok").onclick=()=>{if($("#pn").value!==CFG.pin)return $("#ae").textContent="PIN salah.";
-modal(`<h2>Bank soal (${BANK.length})</h2><p class="mut">Tempel soal dalam format JSON. Tersimpan di browser ini saja.</p><textarea class="in" id="bk" spellcheck="false">${esc(JSON.stringify(BANK,null,1))}</textarea><p class="err" id="ae"></p><div class="acts"><button class="btn" onclick="closeM()">Tutup</button><button class="btn" id="rs">Kembali ke contoh</button><button class="btn pri" id="sv">Simpan</button></div>`);
-$("#sv").onclick=()=>{try{const b=JSON.parse($("#bk").value);if(!Array.isArray(b)||!b.length||b.some(q=>!q.q||!q.tipe||q.kunci===undefined))throw 0;localStorage.setItem(CFG.bank,JSON.stringify(b));BANK=b;closeM()}catch(e){$("#ae").textContent="Format tidak valid: tiap soal wajib punya q, tipe, dan kunci."}};
-$("#rs").onclick=()=>{try{localStorage.removeItem(CFG.bank)}catch(e){}BANK=DEF;closeM()}}}
 /* ---------- KURSOR KUSTOM (desktop) ---------- */
 (()=>{
 const mq=matchMedia("(hover:hover) and (pointer:fine)"),rm=matchMedia("(prefers-reduced-motion:reduce)"),H=document.documentElement,g=$("#cg"),d=$("#cd");
