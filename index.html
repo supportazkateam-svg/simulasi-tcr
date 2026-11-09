@@ -172,6 +172,9 @@ html.cc.t .cdot{opacity:0}
 @keyframes grow{from{width:0}}
 @keyframes ringin{from{--p:0}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}}
+/* Gambar soal: proporsional di desktop, tetap di tengah */
+.qi{display:block;margin:12px auto;width:auto;height:auto;max-width:min(100%,540px);max-height:min(56vh,520px);object-fit:contain}
+@media(max-width:560px){.qi{max-width:100%;max-height:none}}
 @media print{.top,.noprint{display:none!important}body::before{display:none}}
 </style></head><body>
 <header class="top"><div class="logo fd"><img class="lg" src="logo-tcr.png" alt="" onerror="this.style.display='none'"><span class="lt">The Champion Race</span><span class="mut sub">Simulasi</span></div><div class="sp"></div><button class="btn noprint" id="th" aria-label="Ganti tema">Tema</button></header>
